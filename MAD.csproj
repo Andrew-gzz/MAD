@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8FA86795-8A86-429D-9C56-8FC2B02FEBA5}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>MAD</RootNamespace>
+    <AssemblyName>MAD</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Ajustes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ajustes.Designer.cs">
+      <DependentUpon>Ajustes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BDConexion.cs" />
+    <Compile Include="Cabecera.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cabecera.Designer.cs">
+      <DependentUpon>Cabecera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AjustesObligados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AjustesObligados.Designer.cs">
+      <DependentUpon>AjustesObligados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CatálogoEmpleadosSalarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CatálogoEmpleadosSalarios.Designer.cs">
+      <DependentUpon>CatálogoEmpleadosSalarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DAO\ajusteDAO.cs" />
+    <Compile Include="DAO\AjustesEmpleadoPeriodoDAO.cs" />
+    <Compile Include="DAO\departamentoDAO.cs" />
+    <Compile Include="DAO\empleadoDAO.cs" />
+    <Compile Include="DAO\EmpresaDAO.cs" />
+    <Compile Include="DAO\ISRDAO.cs" />
+    <Compile Include="DAO\Movimientos_EmpleadosDAO.cs" />
+    <Compile Include="DAO\PeriodoDAO.cs" />
+    <Compile Include="DAO\puestosDAO.cs" />
+    <Compile Include="DAO\RegistroPatronalDAO.cs" />
+    <Compile Include="DAO\turnoDAO.cs" />
+    <Compile Include="DAO\UsuarioDAO.cs" />
+    <Compile Include="EliminaciónAjuste.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EliminaciónAjuste.Designer.cs">
+      <DependentUpon>EliminaciónAjuste.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Empleados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Empleados.Designer.cs">
+      <DependentUpon>Empleados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReporteNómina.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReporteNómina.Designer.cs">
+      <DependentUpon>ReporteNómina.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sesion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sesion.Designer.cs">
+      <DependentUpon>Sesion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tablas\ajustes.cs" />
+    <Compile Include="Tablas\AjustesEmpleadoPeriodo.cs" />
+    <Compile Include="Tablas\departamentos.cs" />
+    <Compile Include="Tablas\empleado.cs" />
+    <Compile Include="Tablas\Empresa.cs" />
+    <Compile Include="Tablas\ISR.cs" />
+    <Compile Include="Tablas\Movimientos_Empleados.cs" />
+    <Compile Include="Tablas\Periodo.cs" />
+    <Compile Include="Tablas\puestos.cs" />
+    <Compile Include="Tablas\RegistroPatronal.cs" />
+    <Compile Include="Tablas\turnos.cs" />
+    <Compile Include="Tablas\Usuario.cs" />
+    <EmbeddedResource Include="Ajustes.resx">
+      <DependentUpon>Ajustes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cabecera.resx">
+      <DependentUpon>Cabecera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AjustesObligados.resx">
+      <DependentUpon>AjustesObligados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CatálogoEmpleadosSalarios.resx">
+      <DependentUpon>CatálogoEmpleadosSalarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EliminaciónAjuste.resx">
+      <DependentUpon>EliminaciónAjuste.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Empleados.resx">
+      <DependentUpon>Empleados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="ReporteNómina.resx">
+      <DependentUpon>ReporteNómina.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sesion.resx">
+      <DependentUpon>Sesion.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
