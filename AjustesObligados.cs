@@ -117,8 +117,18 @@ namespace MAD
             decimal sumaPercepciones = sueldo + bonoAsistencia + puntualidad + despensa;
 
             // Cálculo de Deducciones
+            decimal isr = 0;
             decimal porcentajeISR = ObtenerPorcentajeISR(empleado.ID_ISR);
-            decimal isr = sueldo * porcentajeISR;
+                     
+            
+            List<ISR> listaISR = ISRDAO.ObtenerISRPorid(empleado.ID_ISR);
+            foreach(var ajuste in listaISR)
+            {
+                isr = empleado.SueldoMensual - ajuste.L_Inferior;
+                isr = isr * porcentajeISR;
+                isr = isr + ajuste.Cuota;
+            }
+
             decimal imss = empleado.SalarioDiarioIntegrado * 0.05m;
             decimal prestamoInfo = empleado.SalarioDiarioIntegrado * 0.15m;
             decimal fondoAhorro = sueldo < 10000 ? 500 : 1000;

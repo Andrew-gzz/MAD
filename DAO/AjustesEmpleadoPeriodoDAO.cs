@@ -114,6 +114,31 @@ namespace MAD.DAO
            
         }
 
+        public static List<AjustesEmpleadoPeriodo> ObtAjustPorEmpleadoPeriodo(int idEmp, int idPer)
+        {
+            List<AjustesEmpleadoPeriodo> lista = new List<AjustesEmpleadoPeriodo>();
 
+            using (SqlConnection conexion = BDConexion.ObtenerConexion())
+            {
+                string query = "SELECT ID_AJUSTE, ID_EMP, ID_PERIODO, DiasHorasIMSS FROM Ajustes_Empleado_Periodo WHERE ID_EMP = @IdEmp AND ID_PERIODO = @IdPer";
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@IdEmp", idEmp);
+                comando.Parameters.AddWithValue("@IdPer", idPer);
+                SqlDataReader reader = comando.ExecuteReader();
+                while (reader.Read())
+                {
+                    AjustesEmpleadoPeriodo ajuste = new AjustesEmpleadoPeriodo
+                    {
+                        IdAjuste = reader.GetInt32(0),
+                        IdEmp = reader.GetInt32(1),
+                        IdPeriodo = reader.GetInt32(2),
+                        DiasHorasIMSS = reader.GetInt64(3)
+                    };
+                    lista.Add(ajuste);
+                }
+            }
+
+            return lista;
+        }
     }
 }

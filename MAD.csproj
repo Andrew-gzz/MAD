@@ -84,6 +84,7 @@
     <Compile Include="DAO\RegistroPatronalDAO.cs" />
     <Compile Include="DAO\turnoDAO.cs" />
     <Compile Include="DAO\UsuarioDAO.cs" />
+    <Compile Include="DAO\VacaionesDAO.cs" />
     <Compile Include="EliminaciónAjuste.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,6 +102,12 @@
     </Compile>
     <Compile Include="ReporteNómina.Designer.cs">
       <DependentUpon>ReporteNómina.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SelecPeriodo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelecPeriodo.Designer.cs">
+      <DependentUpon>SelecPeriodo.cs</DependentUpon>
     </Compile>
     <Compile Include="Sesion.cs">
       <SubType>Form</SubType>
@@ -122,6 +129,7 @@
     <Compile Include="Tablas\RegistroPatronal.cs" />
     <Compile Include="Tablas\turnos.cs" />
     <Compile Include="Tablas\Usuario.cs" />
+    <Compile Include="Tablas\Vacaciones.cs" />
     <EmbeddedResource Include="Ajustes.resx">
       <DependentUpon>Ajustes.cs</DependentUpon>
     </EmbeddedResource>
@@ -151,6 +159,9 @@
     </Compile>
     <EmbeddedResource Include="ReporteNómina.resx">
       <DependentUpon>ReporteNómina.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelecPeriodo.resx">
+      <DependentUpon>SelecPeriodo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Sesion.resx">
       <DependentUpon>Sesion.cs</DependentUpon>

@@ -35,7 +35,6 @@ namespace MAD.DAO
 
             return listaAjustes;
         }
-
         public static int InsertarAjuste(Ajuste ajuste)
         {
             int resultado;
@@ -52,7 +51,6 @@ namespace MAD.DAO
 
             return resultado;
         }
-
         //  método para obtener ajustes obligatorios
         public static List<Ajuste> ObtenerAjustesObligatorios()
         {
@@ -60,7 +58,7 @@ namespace MAD.DAO
 
             using (SqlConnection conexion = BDConexion.ObtenerConexion())
             {
-                string query = "SELECT ID_AJUSTE, Motivo, Tipo FROM ajustes WHERE ID_AJUSTE IN (1, 2, 4, 10, 11, 12, 14)";
+                string query = "SELECT ID_AJUSTE, Motivo, Tipo, Porcentaje  FROM ajustes WHERE ID_AJUSTE IN (1, 2, 4, 11, 12)";
                 SqlCommand comando = new SqlCommand(query, conexion);
                 SqlDataReader reader = comando.ExecuteReader();
 
@@ -68,9 +66,9 @@ namespace MAD.DAO
                 {
                     Ajuste ajuste = new Ajuste
                     {
-                        IdAjuste = reader.GetInt32(0),
-                        Motivo = reader.GetString(1),
-                        Tipo = reader.GetString(2),
+                        IdAjuste = reader.IsDBNull(0) ? 0 : reader.GetInt32(0),
+                        Motivo = reader.IsDBNull(1) ? string.Empty : reader.GetString(1),
+                        Tipo = reader.IsDBNull(2) ? string.Empty : reader.GetString(2),
                         Porcentaje = reader.GetDecimal(3)
                     };
                     listaAjustesObligatorios.Add(ajuste);
@@ -79,7 +77,6 @@ namespace MAD.DAO
 
             return listaAjustesObligatorios;
         }
-
         public static List<Ajuste> ObtenerAjustesPorTipo(string tipo)
         {
             List<Ajuste> listaAjustes = new List<Ajuste>();
@@ -147,6 +144,28 @@ namespace MAD.DAO
 
             return ajuste;
         }
+        public static Ajuste NombrePorId(int idAjuste)
+        {
+            Ajuste ajuste = null;
 
+            using (SqlConnection conexion = BDConexion.ObtenerConexion())
+            {
+                string query = "SELECT Motivo, Tipo FROM ajustes WHERE ID_AJUSTE = @IdAjuste";
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@IdAjuste", idAjuste);
+
+                SqlDataReader reader = comando.ExecuteReader();
+                if (reader.Read())
+                {
+                    ajuste = new Ajuste
+                    {
+                        Motivo = reader.GetString(0),
+                        Tipo = reader.GetString(1)
+                    };
+                }
+            }
+
+            return ajuste;
+        }
     }
 }

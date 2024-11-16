@@ -244,5 +244,10 @@ namespace MAD
                 MessageBox.Show("No se encontró el ID_AJUSTE para el motivo especificado.");
             }                      
         }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
