@@ -68,6 +68,18 @@ namespace MAD
             newWindow.ShowDialog();
             this.Close();
         }
+
+        private void vacacionesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TablaVacaciones newWindow = new TablaVacaciones();           
+            newWindow.ShowDialog();         
+        }
+
+        private void iSRToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TablaISR newWindow = new TablaISR();
+            newWindow.ShowDialog();
+        }
     }
 }
 

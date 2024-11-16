@@ -39,6 +39,9 @@
             this.reporteDeNóminaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.catálogosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.empleadosSueldosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tablasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vacacionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.iSRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,7 +52,8 @@
             this.empleadosToolStripMenuItem,
             this.ajustesToolStripMenuItem,
             this.nominasToolStripMenuItem,
-            this.catálogosToolStripMenuItem});
+            this.catálogosToolStripMenuItem,
+            this.tablasToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(830, 24);
@@ -123,6 +127,29 @@
             this.empleadosSueldosToolStripMenuItem.Text = "Empleados(Sueldos)";
             this.empleadosSueldosToolStripMenuItem.Click += new System.EventHandler(this.empleadosSueldosToolStripMenuItem_Click);
             // 
+            // tablasToolStripMenuItem
+            // 
+            this.tablasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.vacacionesToolStripMenuItem,
+            this.iSRToolStripMenuItem});
+            this.tablasToolStripMenuItem.Name = "tablasToolStripMenuItem";
+            this.tablasToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+            this.tablasToolStripMenuItem.Text = "Tablas";
+            // 
+            // vacacionesToolStripMenuItem
+            // 
+            this.vacacionesToolStripMenuItem.Name = "vacacionesToolStripMenuItem";
+            this.vacacionesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.vacacionesToolStripMenuItem.Text = "Vacaciones";
+            this.vacacionesToolStripMenuItem.Click += new System.EventHandler(this.vacacionesToolStripMenuItem_Click);
+            // 
+            // iSRToolStripMenuItem
+            // 
+            this.iSRToolStripMenuItem.Name = "iSRToolStripMenuItem";
+            this.iSRToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.iSRToolStripMenuItem.Text = "I.S.R";
+            this.iSRToolStripMenuItem.Click += new System.EventHandler(this.iSRToolStripMenuItem_Click);
+            // 
             // Cabecera
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -153,5 +180,8 @@
         private System.Windows.Forms.ToolStripMenuItem reporteDeNóminaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem catálogosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem empleadosSueldosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tablasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem vacacionesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem iSRToolStripMenuItem;
     }
 }
