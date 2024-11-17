@@ -198,7 +198,6 @@ namespace MAD.DAO
 
             return empleado;
         }
-
         public static bool EsDatoUnico(long imss, string curp, long telefono, string rfc)
         {
             using (SqlConnection conexion = BDConexion.ObtenerConexion())
@@ -239,7 +238,6 @@ namespace MAD.DAO
                 return count == 0; // Devuelve true si no hay coincidencias (único), false si hay duplicados.
             }
         }
-
         public static int ObtIdPorCURP(string curp)
         {
             int idEmpleado = -1; // Valor por defecto en caso de no encontrar el empleado.
@@ -264,6 +262,26 @@ namespace MAD.DAO
 
             return idEmpleado; // Devuelve -1 si no encuentra el empleado.
         }
+        public static int ReingresoEmpleado(Empleado empleado)
+        {
+            int resultado = 0;
 
+            using (SqlConnection conexion = BDConexion.ObtenerConexion())
+            {
+                string query = @"
+                    UPDATE empleados 
+                    SET  Fecha_de_Ingreso = @Fecha_de_Ingreso,
+                         Estatus = @Estatus
+                    WHERE ID_EMPLEADO = @ID_EMPLEADO";
+
+                SqlCommand comando = new SqlCommand(query, conexion);                
+                comando.Parameters.AddWithValue("@Fecha_de_Ingreso", empleado.FechaDeIngreso);
+                comando.Parameters.AddWithValue("@Estatus", true);
+                comando.Parameters.AddWithValue("@ID_EMPLEADO", empleado.IdEmpleado);
+                resultado = comando.ExecuteNonQuery();
+            }
+
+            return resultado;
+        }
     }
 }

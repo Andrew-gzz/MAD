@@ -173,6 +173,31 @@ namespace MAD.DAO
 
             return periodo;
         }
+        public static DateTime ObtenerUltimaFechaBaja(int idEmpleado)
+        {
+            DateTime ultimaFechaBaja = DateTime.MinValue;
+
+            using (SqlConnection conexion = BDConexion.ObtenerConexion())
+            {
+                string query = @"
+                SELECT TOP 1 F_BAJA
+                FROM Movimientos_Empleados
+                WHERE ID_EMPLEADO = @ID_EMPLEADO
+                ORDER BY F_BAJA DESC";
+
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@ID_EMPLEADO", idEmpleado);
+
+                object resultado = comando.ExecuteScalar();
+
+                if (resultado != null && resultado != DBNull.Value)
+                {
+                    ultimaFechaBaja = Convert.ToDateTime(resultado);
+                }
+            }
+
+            return ultimaFechaBaja;
+        }
     }
 
 }

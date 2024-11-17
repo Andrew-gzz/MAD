@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -171,11 +172,42 @@ namespace MAD
                 }
             }
         }
-
-        private void button1_Click(object sender, EventArgs e) // Agregar empleado
+        private void button1_Click(object sender, EventArgs e) //Agregar empleado
         {
+
             if (Validaciones())
             {
+                int i = Movimientos_EmpleadosDAO.ObtenerIdMovimientoActivo(int.Parse(textBox1.Text));
+                if (i < 0)
+                {
+                    DialogResult result = MessageBox.Show("El empleado está de baja. ¿Desea darlo de alta de nuevo?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        Empleado empleado = EmpleadoDAO.ObtenerEmpleadoPorId(int.Parse(textBox1.Text));//Validar
+                        DateTime UltimaBaja = Movimientos_EmpleadosDAO.ObtenerUltimaFechaBaja(empleado.IdEmpleado);
+                        if (dateTimePicker2.Value > UltimaBaja)
+                        {
+                            Movimientos_Empleados nuevoMovimiento = new Movimientos_Empleados
+                            {
+                                ID_EMPLEADO = int.Parse(textBox1.Text),
+                                F_ALTA = dateTimePicker2.Value,
+                                ID_PERIODO_ALTA = PeriodoDAO.ObtIdPerPorF_Ingreso(dateTimePicker2.Value)
+                            };
+                            Movimientos_EmpleadosDAO.InsertarMovimiento(nuevoMovimiento);
+                            empleado.FechaDeIngreso = dateTimePicker2.Value;
+                            empleado.Estatus = true;
+                            EmpleadoDAO.ReingresoEmpleado(empleado);
+                            MessageBox.Show("Empleado a sido dado de alta");
+                            return;
+                        }
+                        else
+                        {
+                            MessageBox.Show("No puedes darlo de alta fechas antes de su ultima baja");
+                            return;
+                        }
+                    }
+                    return;
+                }
                 // Llama a la función para obtener los datos del empleado
                 Empleado nuevoEmpleado = ObtenerDatosEmpleado();
 
@@ -223,100 +255,16 @@ namespace MAD
                 }
             }
         }
-
-        private bool Validaciones()
-        {
-            // Validar TextBox
-            if (!ValidarTextBox(textBox2, "Nombre")) return false;
-            if (!ValidarTextBoxNumerico(textBox3, "IMSS")) return false;
-            if (!ValidarTextBox(textBox4, "CURP")) return false;
-            if (!ValidarTextBox(textBox5, "Correo")) return false;
-            if (!ValidarTextBoxNumerico(textBox6, "Teléfono")) return false;
-            if (!ValidarTextBox(textBox7, "RFC")) return false;
-            if (!ValidarTextBox(textBox8, "Dirección")) return false;
-            if (!ValidarTextBoxDecimal(textBox9, "Salario Diario")) return false;
-            if (!ValidarTextBoxDecimal(textBox10, "Sueldo Mensual")) return false;
-            if (!ValidarTextBoxDecimal(textBox11, "Salario Diario Integrado")) return false;
-            if (!ValidarTextBoxNumerico(textBox12, "ID ISR")) return false;
-
-            // Validar RadioButton
-            if (!radioButton1.Checked && !radioButton2.Checked)
-            {
-                MostrarMensajeValidacion("Debe seleccionar un género.");
-                return false;
-            }
-
-            // Validar ComboBox
-            if (!ValidarComboBox(comboBox1, "puesto")) return false;
-            if (!ValidarComboBox(comboBox2, "departamento")) return false;
-            if (!ValidarComboBox(comboBox3, "turno")) return false;
-
-            // Validar DateTimePickers
-            if (!ValidarDateTimePicker(dateTimePicker1, "La fecha de nacimiento no puede ser futura.")) return false;
-            if (!ValidarDateTimePicker(dateTimePicker2, "La fecha de ingreso no puede ser futura.")) return false;
-
-            return true;
-        }
-
-        private bool ValidarTextBox(TextBox textBox, string nombreCampo)
-        {
-            if (string.IsNullOrWhiteSpace(textBox.Text))
-            {
-                MostrarMensajeValidacion($"El campo '{nombreCampo}' no puede estar vacío.");
-                return false;
-            }
-            return true;
-        }
-
-        private bool ValidarTextBoxNumerico(TextBox textBox, string nombreCampo)
-        {
-            if (string.IsNullOrWhiteSpace(textBox.Text) || !long.TryParse(textBox.Text, out _))
-            {
-                MostrarMensajeValidacion($"El campo '{nombreCampo}' debe tener un valor numérico válido.");
-                return false;
-            }
-            return true;
-        }
-
-        private bool ValidarTextBoxDecimal(TextBox textBox, string nombreCampo)
-        {
-            if (string.IsNullOrWhiteSpace(textBox.Text) || !decimal.TryParse(textBox.Text, out _))
-            {
-                MostrarMensajeValidacion($"El campo '{nombreCampo}' debe tener un valor decimal válido.");
-                return false;
-            }
-            return true;
-        }
-
-        private bool ValidarComboBox(ComboBox comboBox, string nombreCampo)
-        {
-            if (comboBox.SelectedIndex == -1 || string.IsNullOrWhiteSpace(comboBox.Text))
-            {
-                MostrarMensajeValidacion($"Debe seleccionar un {nombreCampo}.");
-                return false;
-            }
-            return true;
-        }
-
-        private bool ValidarDateTimePicker(DateTimePicker dateTimePicker, string mensajeError)
-        {
-            if (dateTimePicker.Value.Date > DateTime.Now.Date)
-            {
-                MostrarMensajeValidacion(mensajeError);
-                return false;
-            }
-            return true;
-        }
-
-        private void MostrarMensajeValidacion(string mensaje)
-        {
-            MessageBox.Show(mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
-
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)//Modificar empleado
         {
             if (Validaciones())
             {
+                int i = Movimientos_EmpleadosDAO.ObtenerIdMovimientoActivo(int.Parse(textBox1.Text));
+                if (i < 0)
+                {
+                    MostrarMensajeValidacion("El usuario esta dado de baja, no puedes modificar datos");
+                    return;
+                }
                 // Llama a la función para obtener los datos del empleado
                 Empleado nuevoEmpleado = ObtenerDatosEmpleado();
                 // Validación de duplicados
@@ -330,7 +278,35 @@ namespace MAD
                 int idmov = Movimientos_EmpleadosDAO.ObtenerIdMovimientoActivo(nuevoEmpleado.IdEmpleado);
                 int idperiodo = PeriodoDAO.ObtIdPerPorF_Ingreso(nuevoEmpleado.FechaDeIngreso);
                 Movimientos_EmpleadosDAO.ActualizarMov(nuevoEmpleado.FechaDeIngreso, idperiodo, idmov);
-                MessageBox.Show("Empleado actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);                
+                MessageBox.Show("Empleado actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        private void button3_Click(object sender, EventArgs e)//Dar de baja
+        {
+            try
+            {
+                int i = Movimientos_EmpleadosDAO.ObtenerIdMovimientoActivo(int.Parse(textBox1.Text));
+                if (i < 0)
+                {
+                    MostrarMensajeValidacion("El usuario ya esta dado de baja");
+                    return;
+                }
+                //Optencion de datos
+                BajaEmpleado newWindow = new BajaEmpleado(this);
+                newWindow.ShowDialog();
+                if (Fecha_Baja != DateTime.MinValue)//Tipo DateTime verificar si no esta vacio
+                {
+                    int id_per = PeriodoDAO.ObtIdPerPorF_Ingreso(Fecha_Baja);
+                    int id_mov = Movimientos_EmpleadosDAO.ObtenerIdMovimientoActivo(int.Parse(textBox1.Text));
+                    //Updates            
+                    int update1 = EmpleadoDAO.BajaEmpleado(int.Parse(textBox1.Text));
+                    int update2 = Movimientos_EmpleadosDAO.BajaEmpleado(Fecha_Baja, id_per, id_mov);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
             }
         }
         private Empleado ObtenerDatosEmpleado()
@@ -389,28 +365,89 @@ namespace MAD
                 ID_ISR = idisr
             };
         }
-
-        private void button3_Click(object sender, EventArgs e)
+        private bool Validaciones()
         {
-            try
+            // Validar TextBox
+            if (!ValidarTextBox(textBox2, "Nombre")) return false;
+            if (!ValidarTextBoxNumerico(textBox3, "IMSS")) return false;
+            if (!ValidarTextBox(textBox4, "CURP")) return false;
+            if (!ValidarTextBox(textBox5, "Correo")) return false;
+            if (!ValidarTextBoxNumerico(textBox6, "Teléfono")) return false;
+            if (!ValidarTextBox(textBox7, "RFC")) return false;
+            if (!ValidarTextBox(textBox8, "Dirección")) return false;
+            if (!ValidarTextBoxDecimal(textBox9, "Salario Diario")) return false;
+            if (!ValidarTextBoxDecimal(textBox10, "Sueldo Mensual")) return false;
+            if (!ValidarTextBoxDecimal(textBox11, "Salario Diario Integrado")) return false;
+            if (!ValidarTextBoxNumerico(textBox12, "ID ISR")) return false;
+
+            // Validar RadioButton
+            if (!radioButton1.Checked && !radioButton2.Checked)
             {
-                //Optencion de datos
-                BajaEmpleado newWindow = new BajaEmpleado(this);
-                newWindow.ShowDialog();
-                if (Fecha_Baja != DateTime.MinValue)//Tipo DateTime verificar si no esta vacio
-                {
-                    int id_per = PeriodoDAO.ObtIdPerPorF_Ingreso(Fecha_Baja);
-                    int id_mov = Movimientos_EmpleadosDAO.ObtenerIdMovimientoActivo(int.Parse(textBox1.Text));
-                    //Updates            
-                    int update1 = EmpleadoDAO.BajaEmpleado(int.Parse(textBox1.Text));
-                    int update2 = Movimientos_EmpleadosDAO.BajaEmpleado(Fecha_Baja, id_per, id_mov);
-                }                
+                MostrarMensajeValidacion("Debe seleccionar un género.");
+                return false;
             }
-            catch (Exception ex) { 
-            
-            MessageBox.Show(ex.Message);
-            }
+
+            // Validar ComboBox
+            if (!ValidarComboBox(comboBox1, "puesto")) return false;
+            if (!ValidarComboBox(comboBox2, "departamento")) return false;
+            if (!ValidarComboBox(comboBox3, "turno")) return false;
+
+            // Validar DateTimePickers
+            if (!ValidarDateTimePicker(dateTimePicker1, "La fecha de nacimiento no puede ser futura.")) return false;
+            if (!ValidarDateTimePicker(dateTimePicker2, "La fecha de ingreso no puede ser futura.")) return false;
+
+            //Validar si el empleado esta dado de baja
+            return true;
         }
+        private bool ValidarTextBox(TextBox textBox, string nombreCampo)
+        {
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                MostrarMensajeValidacion($"El campo '{nombreCampo}' no puede estar vacío.");
+                return false;
+            }
+            return true;
+        }
+        private bool ValidarTextBoxNumerico(TextBox textBox, string nombreCampo)
+        {
+            if (string.IsNullOrWhiteSpace(textBox.Text) || !long.TryParse(textBox.Text, out _))
+            {
+                MostrarMensajeValidacion($"El campo '{nombreCampo}' debe tener un valor numérico válido.");
+                return false;
+            }
+            return true;
+        }
+        private bool ValidarTextBoxDecimal(TextBox textBox, string nombreCampo)
+        {
+            if (string.IsNullOrWhiteSpace(textBox.Text) || !decimal.TryParse(textBox.Text, out _))
+            {
+                MostrarMensajeValidacion($"El campo '{nombreCampo}' debe tener un valor decimal válido.");
+                return false;
+            }
+            return true;
+        }
+        private bool ValidarComboBox(ComboBox comboBox, string nombreCampo)
+        {
+            if (comboBox.SelectedIndex == -1 || string.IsNullOrWhiteSpace(comboBox.Text))
+            {
+                MostrarMensajeValidacion($"Debe seleccionar un {nombreCampo}.");
+                return false;
+            }
+            return true;
+        }
+        private bool ValidarDateTimePicker(DateTimePicker dateTimePicker, string mensajeError)
+        {
+            if (dateTimePicker.Value.Date > DateTime.Now.Date)
+            {
+                MostrarMensajeValidacion(mensajeError);
+                return false;
+            }
+            return true;
+        }
+        private void MostrarMensajeValidacion(string mensaje)
+        {
+            MessageBox.Show(mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }       
     }
 }
 
