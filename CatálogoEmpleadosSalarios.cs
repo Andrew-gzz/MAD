@@ -51,11 +51,11 @@ namespace MAD
             foreach (Empleado empleado in listaEmpleados)
             {
                 if (empleado.Estatus) { 
-                    dataGridView1.Rows.Add(empleado.IdEmpleado, empleado.Nombre, "Activo", empleado.FechaDeIngreso, "Fijo", empleado.SalarioDiario, empleado.SalarioDiarioIntegrado, empleado.SueldoMensual);
+                    dataGridView1.Rows.Add(empleado.IdEmpleado, empleado.Nombre, "Activo", empleado.FechaDeIngreso.ToString("dd/MM/yyyy"), "Fijo", empleado.SalarioDiario, empleado.SalarioDiarioIntegrado, empleado.SueldoMensual);
                 }
                 else
                 {
-                    dataGridView1.Rows.Add(empleado.IdEmpleado, empleado.Nombre, "Inactivo", empleado.FechaDeIngreso, "Fijo", empleado.SalarioDiario, empleado.SalarioDiarioIntegrado, empleado.SueldoMensual);
+                    dataGridView1.Rows.Add(empleado.IdEmpleado, empleado.Nombre, "Inactivo", empleado.FechaDeIngreso.ToString("dd/MM/yyyy"), "Fijo", empleado.SalarioDiario, empleado.SalarioDiarioIntegrado, empleado.SueldoMensual);
                 }
             }
 

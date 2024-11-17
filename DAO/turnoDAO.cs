@@ -76,5 +76,25 @@ namespace MAD.DAO
             return tipoTurno;
         }
 
+        public static int ObtIdPorTipo(string turno)
+        {
+            int ID= 0;
+
+            using (SqlConnection conexion = BDConexion.ObtenerConexion())
+            {
+                string query = "SELECT ID_TURNO FROM turnos WHERE Tipo = @turno";
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@turno", turno);
+
+                SqlDataReader reader = comando.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    ID = reader.GetInt32(0);
+                }
+            }
+
+            return ID;
+        }
     }
 }

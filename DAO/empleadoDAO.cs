@@ -18,11 +18,11 @@ namespace MAD.DAO
             using (SqlConnection conexion = BDConexion.ObtenerConexion())
             {
                 string query = @"
-                    INSERT INTO empleados (IMMS, CURP, Nombre, F_Nacimiento, Correo, Genero, Telefono, RFC, Direccion, Salario_Diario, Sueldo_Mensual, Salario_Diario_Integrado, Antiguedad, Fecha_de_Ingreso, ID_PUESTO, ID_DEP, ID_TURNO, Estatus, ID_ISR)
-                    VALUES (@IMMS, @CURP, @Nombre, @F_Nacimiento, @Correo, @Genero, @Telefono, @RFC, @Direccion, @Salario_Diario, @Sueldo_Mensual, @Salario_Diario_Integrado, @Antiguedad, @Fecha_de_Ingreso, @ID_PUESTO, @ID_DEP, @ID_TURNO, @Estatus, @ISR)";
+                    INSERT INTO empleados (IMSS, CURP, Nombre, F_Nacimiento, Correo, Genero, Telefono, RFC, Direccion, Salario_Diario, Sueldo_Mensual, Salario_Diario_Integrado, Antiguedad, Fecha_de_Ingreso, ID_PUESTO, ID_DEP, ID_TURNO, Estatus, ID_ISR)
+                    VALUES (@IMSS, @CURP, @Nombre, @F_Nacimiento, @Correo, @Genero, @Telefono, @RFC, @Direccion, @Salario_Diario, @Sueldo_Mensual, @Salario_Diario_Integrado, @Antiguedad, @Fecha_de_Ingreso, @ID_PUESTO, @ID_DEP, @ID_TURNO, @Estatus, @ISR)";
 
                 SqlCommand comando = new SqlCommand(query, conexion);
-                comando.Parameters.AddWithValue("@IMMS", empleado.Imss);
+                comando.Parameters.AddWithValue("@IMSS", empleado.Imss);
                 comando.Parameters.AddWithValue("@CURP", empleado.Curp);
                 comando.Parameters.AddWithValue("@Nombre", empleado.Nombre);
                 comando.Parameters.AddWithValue("@F_Nacimiento", empleado.FechaNacimiento);
@@ -101,14 +101,14 @@ namespace MAD.DAO
             {
                 string query = @"
                     UPDATE empleados 
-                    SET IMMS = @IMMS, CURP = @CURP, Nombre = @Nombre, F_Nacimiento = @F_Nacimiento, Correo = @Correo, Genero = @Genero,
+                    SET IMSS = @IMSS, CURP = @CURP, Nombre = @Nombre, F_Nacimiento = @F_Nacimiento, Correo = @Correo, Genero = @Genero,
                         Telefono = @Telefono, RFC = @RFC, Direccion = @Direccion, Salario_Diario = @Salario_Diario, Sueldo_Mensual = @Sueldo_Mensual,
                         Salario_Diario_Integrado = @Salario_Diario_Integrado, Antiguedad = @Antiguedad, Fecha_de_Ingreso = @Fecha_de_Ingreso,
                         ID_PUESTO = @ID_PUESTO, ID_DEP = @ID_DEP, ID_TURNO = @ID_TURNO, Estatus = @Estatus, ID_ISR = @ISR
                     WHERE ID_EMPLEADO = @ID_EMPLEADO";
 
                 SqlCommand comando = new SqlCommand(query, conexion);
-                comando.Parameters.AddWithValue("@IMMS", empleado.Imss);
+                comando.Parameters.AddWithValue("@IMSS", empleado.Imss);
                 comando.Parameters.AddWithValue("@CURP", empleado.Curp);
                 comando.Parameters.AddWithValue("@Nombre", empleado.Nombre);
                 comando.Parameters.AddWithValue("@F_Nacimiento", empleado.FechaNacimiento);
@@ -194,6 +194,72 @@ namespace MAD.DAO
             }
 
             return empleado;
+        }
+
+        public static bool EsDatoUnico(long imss, string curp, long telefono, string rfc)
+        {
+            using (SqlConnection conexion = BDConexion.ObtenerConexion())
+            {
+                string query = @"
+                SELECT COUNT(*)
+                FROM empleados
+                WHERE IMSS = @IMSS OR CURP = @CURP OR Telefono = @Telefono OR RFC = @RFC";
+
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@IMSS", imss);
+                comando.Parameters.AddWithValue("@CURP", curp);
+                comando.Parameters.AddWithValue("@Telefono", telefono);
+                comando.Parameters.AddWithValue("@RFC", rfc);
+
+                int count = (int)comando.ExecuteScalar();
+                return count == 0; // Devuelve true si no hay coincidencias, false si hay al menos una.
+            }
+        }
+        public static bool EsDatoUnico(long imss, string curp, long telefono, string rfc, int idEmpleado)
+        {
+            using (SqlConnection conexion = BDConexion.ObtenerConexion())
+            {
+                string query = @"
+            SELECT COUNT(*)
+            FROM empleados
+            WHERE (IMSS = @IMSS OR CURP = @CURP OR Telefono = @Telefono OR RFC = @RFC)
+            AND ID_EMPLEADO != @ID_EMPLEADO";
+
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@IMSS", imss);
+                comando.Parameters.AddWithValue("@CURP", curp);
+                comando.Parameters.AddWithValue("@Telefono", telefono);
+                comando.Parameters.AddWithValue("@RFC", rfc);
+                comando.Parameters.AddWithValue("@ID_EMPLEADO", idEmpleado);
+
+                int count = (int)comando.ExecuteScalar();
+                return count == 0; // Devuelve true si no hay coincidencias (único), false si hay duplicados.
+            }
+        }
+
+        public static int ObtIdPorCURP(string curp)
+        {
+            int idEmpleado = -1; // Valor por defecto en caso de no encontrar el empleado.
+
+            using (SqlConnection conexion = BDConexion.ObtenerConexion())
+            {
+                string query = @"
+            SELECT ID_EMPLEADO
+            FROM empleados
+            WHERE CURP = @CURP";
+
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@CURP", curp);
+
+                object resultado = comando.ExecuteScalar();
+
+                if (resultado != null)
+                {
+                    idEmpleado = Convert.ToInt32(resultado); // Convierte el resultado al tipo int.
+                }
+            }
+
+            return idEmpleado; // Devuelve -1 si no encuentra el empleado.
         }
 
     }

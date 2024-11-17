@@ -75,6 +75,26 @@ namespace MAD.DAO
 
                 return nombreDepartamento;
             }
+            public static int ObtIdPorDep(string dep)
+            {
+                int idDep = 0;
+
+                using (SqlConnection conexion = BDConexion.ObtenerConexion())
+                {
+                    string query = "SELECT ID_DEP FROM departamentos WHERE Departamento = @DEP";
+                    SqlCommand comando = new SqlCommand(query, conexion);
+                    comando.Parameters.AddWithValue("@DEP", dep);
+
+                    SqlDataReader reader = comando.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        idDep = reader.GetInt32(0);
+                    }
+                }
+
+                return idDep;
+            }
 
         }
     }

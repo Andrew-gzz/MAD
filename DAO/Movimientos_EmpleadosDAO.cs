@@ -18,14 +18,13 @@ namespace MAD.DAO
             using (SqlConnection conexion = BDConexion.ObtenerConexion())
             {
                 string query = @"
-                    INSERT INTO empleados (ID_EMPLEADO, F_ALTA, F_BAJA, ID_PERIODO)
-                    VALUES (@ID_EMP, @F_ALTA, @F_BAJA, @ID_PER)";
+                    INSERT INTO Movimientos_Empleados (ID_EMPLEADO, F_ALTA, ID_PERIODO_ALTA)
+                    VALUES (@ID_EMP, @F_ALTA, @ID_PER_ALTA)";
 
                 SqlCommand comando = new SqlCommand(query, conexion);
                 comando.Parameters.AddWithValue("@ID_EMP", movimientos.ID_EMPLEADO);
                 comando.Parameters.AddWithValue("@F_ALTA", movimientos.F_ALTA);
-                comando.Parameters.AddWithValue("@F_BAJA", movimientos.F_BAJA);
-                comando.Parameters.AddWithValue("@ID_PER", movimientos.ID_PERIODO);
+                comando.Parameters.AddWithValue("@ID_PER_ALTA", movimientos.ID_PERIODO_ALTA);
                 resultado = comando.ExecuteNonQuery();
             }
 
@@ -50,7 +49,7 @@ namespace MAD.DAO
                         ID_EMPLEADO = reader.GetInt32(1),
                         F_ALTA = reader.GetDateTime(2),
                         F_BAJA = reader.GetDateTime(3),
-                        ID_PERIODO = reader.GetInt32(1)                       
+                        ID_PERIODO_ALTA = reader.GetInt32(1)                       
                     };
 
                     listamovimientos.Add(movimiento);

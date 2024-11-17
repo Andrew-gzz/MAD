@@ -102,5 +102,29 @@ namespace MAD.DAO
 
             return periodo;
         }
+
+        public static int ObtIdPerPorF_Ingreso(DateTime fecha) {
+            int idPeriodo = 0; // Inicializamos con 0 en caso de que no se encuentre un periodo.
+
+            using (SqlConnection conexion = BDConexion.ObtenerConexion())
+            {
+                string query = @"
+                SELECT ID_Periodo
+                FROM Periodos
+                WHERE @Fecha BETWEEN F_Inicial AND F_Fin";
+
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@Fecha", fecha);
+
+                object resultado = comando.ExecuteScalar();
+
+                if (resultado != null)
+                {
+                    idPeriodo = Convert.ToInt32(resultado);
+                }
+            }
+
+            return idPeriodo;
+        }
     }
 }

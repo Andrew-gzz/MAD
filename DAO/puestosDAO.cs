@@ -73,6 +73,25 @@ namespace MAD.DAO
 
             return nombrePuesto;
         }
+        public static int ObtIdPorPuesto(string puesto)
+        {
+            int ID = 0;
 
+            using (SqlConnection conexion = BDConexion.ObtenerConexion())
+            {
+                string query = "SELECT ID_PUESTO FROM puestos WHERE Puesto = @puesto";
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@puesto", puesto);
+
+                SqlDataReader reader = comando.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    ID = reader.GetInt32(0);
+                }
+            }
+
+            return ID;
+        }
     }
 }

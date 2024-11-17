@@ -171,6 +171,222 @@ namespace MAD
             }
         }
 
+        private void button1_Click(object sender, EventArgs e) // Agregar empleado
+        {
+            if (Validaciones())
+            {
+                // Llama a la función para obtener los datos del empleado
+                Empleado nuevoEmpleado = ObtenerDatosEmpleado();
+
+                // Validación de duplicados
+                if (!EmpleadoDAO.EsDatoUnico(nuevoEmpleado.Imss, nuevoEmpleado.Curp, nuevoEmpleado.Telefono, nuevoEmpleado.Rfc))
+                {
+                    MessageBox.Show("IMSS, CURP, Teléfono o RFC ya están registrados en el sistema.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return; // Salir si hay duplicados
+                }
+
+                // Inserta al empleado y obtiene su ID
+                int resultadoEmpleado = EmpleadoDAO.InsertarEmpleado(nuevoEmpleado);
+
+                if (resultadoEmpleado > 0)
+                {
+                    // Busca el ID del empleado por su CURP
+                    int idEmpleado = EmpleadoDAO.ObtIdPorCURP(nuevoEmpleado.Curp);
+
+                    // Busca el ID del periodo por su fecha de ingreso
+                    int idPeriodo = PeriodoDAO.ObtIdPerPorF_Ingreso(nuevoEmpleado.FechaDeIngreso);
+
+                    // Crea el objeto de movimiento
+                    Movimientos_Empleados nuevoMovimiento = new Movimientos_Empleados
+                    {
+                        ID_EMPLEADO = idEmpleado,
+                        F_ALTA = nuevoEmpleado.FechaDeIngreso,
+                        ID_PERIODO_ALTA = idPeriodo
+                    };
+
+                    // Inserta el movimiento
+                    int resultadoMovimiento = Movimientos_EmpleadosDAO.InsertarMovimiento(nuevoMovimiento);
+
+                    if (resultadoMovimiento > 0)
+                    {
+                        MessageBox.Show("Empleado y movimiento agregados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Empleado agregado, pero ocurrió un error al registrar el movimiento.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Ocurrió un error al agregar el empleado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+
+        private bool Validaciones()
+        {
+            // Validar TextBox
+            if (!ValidarTextBox(textBox2, "Nombre")) return false;
+            if (!ValidarTextBoxNumerico(textBox3, "IMSS")) return false;
+            if (!ValidarTextBox(textBox4, "CURP")) return false;
+            if (!ValidarTextBox(textBox5, "Correo")) return false;
+            if (!ValidarTextBoxNumerico(textBox6, "Teléfono")) return false;
+            if (!ValidarTextBox(textBox7, "RFC")) return false;
+            if (!ValidarTextBox(textBox8, "Dirección")) return false;
+            if (!ValidarTextBoxDecimal(textBox9, "Salario Diario")) return false;
+            if (!ValidarTextBoxDecimal(textBox10, "Sueldo Mensual")) return false;
+            if (!ValidarTextBoxDecimal(textBox11, "Salario Diario Integrado")) return false;
+            if (!ValidarTextBoxNumerico(textBox12, "ID ISR")) return false;
+
+            // Validar RadioButton
+            if (!radioButton1.Checked && !radioButton2.Checked)
+            {
+                MostrarMensajeValidacion("Debe seleccionar un género.");
+                return false;
+            }
+
+            // Validar ComboBox
+            if (!ValidarComboBox(comboBox1, "puesto")) return false;
+            if (!ValidarComboBox(comboBox2, "departamento")) return false;
+            if (!ValidarComboBox(comboBox3, "turno")) return false;
+
+            // Validar DateTimePickers
+            if (!ValidarDateTimePicker(dateTimePicker1, "La fecha de nacimiento no puede ser futura.")) return false;
+            if (!ValidarDateTimePicker(dateTimePicker2, "La fecha de ingreso no puede ser futura.")) return false;
+
+            return true;
+        }
+
+        private bool ValidarTextBox(TextBox textBox, string nombreCampo)
+        {
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                MostrarMensajeValidacion($"El campo '{nombreCampo}' no puede estar vacío.");
+                return false;
+            }
+            return true;
+        }
+
+        private bool ValidarTextBoxNumerico(TextBox textBox, string nombreCampo)
+        {
+            if (string.IsNullOrWhiteSpace(textBox.Text) || !long.TryParse(textBox.Text, out _))
+            {
+                MostrarMensajeValidacion($"El campo '{nombreCampo}' debe tener un valor numérico válido.");
+                return false;
+            }
+            return true;
+        }
+
+        private bool ValidarTextBoxDecimal(TextBox textBox, string nombreCampo)
+        {
+            if (string.IsNullOrWhiteSpace(textBox.Text) || !decimal.TryParse(textBox.Text, out _))
+            {
+                MostrarMensajeValidacion($"El campo '{nombreCampo}' debe tener un valor decimal válido.");
+                return false;
+            }
+            return true;
+        }
+
+        private bool ValidarComboBox(ComboBox comboBox, string nombreCampo)
+        {
+            if (comboBox.SelectedIndex == -1 || string.IsNullOrWhiteSpace(comboBox.Text))
+            {
+                MostrarMensajeValidacion($"Debe seleccionar un {nombreCampo}.");
+                return false;
+            }
+            return true;
+        }
+
+        private bool ValidarDateTimePicker(DateTimePicker dateTimePicker, string mensajeError)
+        {
+            if (dateTimePicker.Value.Date > DateTime.Now.Date)
+            {
+                MostrarMensajeValidacion(mensajeError);
+                return false;
+            }
+            return true;
+        }
+
+        private void MostrarMensajeValidacion(string mensaje)
+        {
+            MessageBox.Show(mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (Validaciones())
+            {
+                // Llama a la función para obtener los datos del empleado
+                Empleado nuevoEmpleado = ObtenerDatosEmpleado();
+                // Validación de duplicados
+                if (!EmpleadoDAO.EsDatoUnico(nuevoEmpleado.Imss, nuevoEmpleado.Curp, nuevoEmpleado.Telefono, nuevoEmpleado.Rfc, int.Parse(textBox1.Text)))
+                {
+                    MessageBox.Show("IMSS, CURP, Teléfono o RFC ya están registrados en el sistema.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return; // Salir si hay duplicados
+                }
+                // Decide si es una inserción o una actualización              
+                EmpleadoDAO.ActualizarEmpleado(nuevoEmpleado); // Método para actualizar el empleado
+                MessageBox.Show("Empleado actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);                
+            }
+        }
+        private Empleado ObtenerDatosEmpleado()
+        {
+            string name = textBox2.Text; // Nombre
+            long imss = long.Parse(textBox3.Text); // IMSS
+            string curp = textBox4.Text; // CURP
+            DateTime f_nac = dateTimePicker1.Value; // Fecha de Nacimiento
+            string correo = textBox5.Text; // Correo
+            string genero = radioButton1.Checked ? radioButton1.Text : radioButton2.Text; // Género
+            long telefono = long.Parse(textBox6.Text); // Teléfono
+            string rfc = textBox7.Text; // RFC
+            string domicilio = textBox8.Text; // Dirección
+            decimal sd = decimal.Parse(textBox9.Text); // Salario Diario
+            decimal sm = decimal.Parse(textBox10.Text); // Sueldo Mensual
+            decimal sdi = decimal.Parse(textBox11.Text); // Salario Diario Integrado
+            DateTime f_ingreso = dateTimePicker2.Value; // Fecha de Ingreso
+            DateTime f_actual = DateTime.Now;
+
+            // Calcular antigüedad
+            int antiguedad = f_actual.Year - f_ingreso.Year;
+            if (f_actual.Month < f_ingreso.Month || (f_actual.Month == f_ingreso.Month && f_actual.Day < f_ingreso.Day))
+            {
+                antiguedad--; // Resta 1 año si no se cumplió aún
+            }
+            antiguedad = Math.Max(0, antiguedad);
+
+            int idpuesto = puestosDAO.ObtIdPorPuesto(comboBox1.Text); // ID_PUESTO
+            int iddep = departamentoDAO.ObtIdPorDep(comboBox2.Text); // ID_DEP
+            int idturno = TurnosDAO.ObtIdPorTipo(comboBox3.Text); // ID_TURNO
+            bool estatus = true;
+            int idisr = int.Parse(textBox12.Text); // ID_ISR
+
+            // Crear el objeto Empleado
+            return new Empleado
+            {
+                IdEmpleado = int.Parse(textBox1.Text),
+                Imss = imss,
+                Curp = curp,
+                Nombre = name,
+                FechaNacimiento = f_nac,
+                Correo = correo,
+                Genero = genero,
+                Telefono = telefono,
+                Rfc = rfc,
+                Direccion = domicilio,
+                SalarioDiario = sd,
+                SueldoMensual = sm,
+                SalarioDiarioIntegrado = sdi,
+                FechaDeIngreso = f_ingreso,
+                Antiguedad = antiguedad,
+                IdPuesto = idpuesto,
+                IdDep = iddep,
+                IdTurno = idturno,
+                Estatus = estatus,
+                ID_ISR = idisr
+            };
+        }
+
     }
 }
 
