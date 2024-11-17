@@ -16,6 +16,7 @@ namespace MAD
     {
 
         public DateTime periodo { get; set; }
+        public int idempleado { get; set; }
 
         private ReporteNómina _reportenomina;
         public SelecPeriodo(ReporteNómina reportenomina)
@@ -35,12 +36,24 @@ namespace MAD
             dataGridView1.Columns.Add("F_Final", "Fecha Fin");
 
             // Obtener todos los periodos desde la fecha de ingreso del empleado
-            List<Periodo> periodos = PeriodoDAO.ObtenerPeriodosDesdeFechaIngreso(periodo);
-
+            List<Movimientos_Empleados> lista = Movimientos_EmpleadosDAO.ObtPeriodosPorEmp(idempleado);
             // Llenar el DataGridView con los periodos obtenidos
-            foreach (var periodo in periodos)
+            foreach (var row in lista)
             {
-                dataGridView1.Rows.Add(periodo.IdPeriodo, periodo.FInicial.ToString("yyyy-MM-dd"), periodo.FFin.ToString("yyyy-MM-dd"));
+                List<Periodo> periodos = PeriodoDAO.ObtPeridosEnUnRango(row.ID_PERIODO_ALTA, row.ID_PERIODO_BAJA);
+                foreach (var periodo in periodos) { 
+
+                    dataGridView1.Rows.Add(periodo.IdPeriodo, periodo.FInicial.ToString("yyyy-MM-dd"), periodo.FFin.ToString("yyyy-MM-dd"));
+                }
+            }
+            int idperiodo = Movimientos_EmpleadosDAO.ObtPeriodoAlta(idempleado);
+            if (idperiodo > 0) {
+                List<Periodo> Periodos = PeriodoDAO.PeriodoEnAdelante(idperiodo);
+                foreach (var periodo in Periodos)
+                {
+
+                    dataGridView1.Rows.Add(periodo.IdPeriodo, periodo.FInicial.ToString("yyyy-MM-dd"), periodo.FFin.ToString("yyyy-MM-dd"));
+                }
             }
         }
         public int idper;

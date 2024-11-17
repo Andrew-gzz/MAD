@@ -94,7 +94,7 @@ namespace MAD
                 if (empleado != null)
                 {                   
                     SelecPeriodo newWindow = new SelecPeriodo(this);
-                    newWindow.periodo = empleado.FechaDeIngreso;
+                    newWindow.idempleado = empleado.IdEmpleado;
                     newWindow.ShowDialog();
                     if (periodoseleccionado != 0)
                     {

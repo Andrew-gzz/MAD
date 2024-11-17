@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace MAD
 {
-    public partial class TablaVacaciones : Cabecera
+    public partial class TablaVacaciones : Form
     {
         public TablaVacaciones()
         {

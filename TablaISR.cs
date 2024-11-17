@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace MAD
 {
-    public partial class TablaISR : Cabecera
+    public partial class TablaISR : Form
     {
         public TablaISR()
         {

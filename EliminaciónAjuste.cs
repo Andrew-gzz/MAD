@@ -64,25 +64,8 @@ namespace MAD
             dataGridView1.Columns.Add("ID_PERIODO", "ID_PERIODO");
             dataGridView1.Columns.Add("F_Inicio", "F_Inicio");
             dataGridView1.Columns.Add("F_Final", "F_Final");
-            dataGridView1.Columns.Add("DiasHorasIMSS", "DiasHorasIMSS");
+            dataGridView1.Columns.Add("Días/Horas", "Días/Horas");
 
-            // Configura el ancho de las columnas si es necesario
-            dataGridView1.Columns["ID_AJUSTE"].Width = 100;
-            dataGridView1.Columns["Motivo"].Width = 150;
-            dataGridView1.Columns["ID_EMP"].Width = 100;
-            dataGridView1.Columns["ID_PERIODO"].Width = 100;
-            dataGridView1.Columns["F_Inicio"].Width = 100;
-            dataGridView1.Columns["F_Final"].Width = 100;
-            dataGridView1.Columns["DiasHorasIMSS"].Width = 100;
-
-            // Opcional: Configura si las columnas son solo de lectura
-            dataGridView1.Columns["ID_AJUSTE"].ReadOnly = true;
-            dataGridView1.Columns["Motivo"].ReadOnly = true;
-            dataGridView1.Columns["ID_EMP"].ReadOnly = true;
-            dataGridView1.Columns["ID_PERIODO"].ReadOnly = true;
-            dataGridView1.Columns["F_Inicio"].ReadOnly = true;
-            dataGridView1.Columns["F_Final"].ReadOnly = true;
-            dataGridView1.Columns["DiasHorasIMSS"].ReadOnly = true;
         }
 
         private int idemp, idper, idajs;

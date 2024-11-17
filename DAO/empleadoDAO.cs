@@ -136,14 +136,17 @@ namespace MAD.DAO
         }
 
         // Método para borrar un empleado
-        public static int BorrarEmpleado(int idEmpleado)
+        public static int BajaEmpleado(int idEmpleado)
         {
             int resultado = 0;
 
             using (SqlConnection conexion = BDConexion.ObtenerConexion())
             {
-                string query = "DELETE FROM empleados WHERE ID_EMPLEADO = @ID_EMPLEADO";
+                string query = @"UPDATE empleados
+                                SET Estatus = @Estatus
+                                WHERE ID_EMPLEADO = @ID_EMPLEADO";
                 SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@Estatus", false);
                 comando.Parameters.AddWithValue("@ID_EMPLEADO", idEmpleado);
 
                 resultado = comando.ExecuteNonQuery();
@@ -244,9 +247,9 @@ namespace MAD.DAO
             using (SqlConnection conexion = BDConexion.ObtenerConexion())
             {
                 string query = @"
-            SELECT ID_EMPLEADO
-            FROM empleados
-            WHERE CURP = @CURP";
+                    SELECT ID_EMPLEADO
+                    FROM empleados
+                    WHERE CURP = @CURP";
 
                 SqlCommand comando = new SqlCommand(query, conexion);
                 comando.Parameters.AddWithValue("@CURP", curp);

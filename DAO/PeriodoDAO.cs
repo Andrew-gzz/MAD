@@ -126,5 +126,61 @@ namespace MAD.DAO
 
             return idPeriodo;
         }
+
+        public static List<Periodo> ObtPeridosEnUnRango(int PeriodoInicial, int PeriodoFinal)
+        {
+            List<Periodo> lista = new List<Periodo>();
+
+            using (SqlConnection conexion = BDConexion.ObtenerConexion())
+            {
+                string query = "SELECT ID_Periodo, F_Inicial, F_Fin FROM periodos WHERE ID_Periodo BETWEEN @PeriodoInicial AND @PeriodoFinal";
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@PeriodoInicial", PeriodoInicial);
+                comando.Parameters.AddWithValue("@PeriodoFinal", PeriodoFinal);
+
+                SqlDataReader reader = comando.ExecuteReader();
+                while (reader.Read())
+                {
+                    Periodo periodo = new Periodo
+                    {
+                        IdPeriodo = reader.GetInt32(0),
+                        FInicial = reader.GetDateTime(1),
+                        FFin = reader.GetDateTime(2)
+                    };
+
+                    lista.Add(periodo);
+                }
+            }
+
+            return lista;
+        }
+
+        public static List<Periodo> PeriodoEnAdelante(int idper)
+        {
+            List<Periodo> periodos = new List<Periodo>();
+
+            using (SqlConnection conexion = BDConexion.ObtenerConexion())
+            {
+                string query = "SELECT ID_Periodo, F_Inicial, F_Fin FROM periodos WHERE ID_Periodo >= @ID_Periodo";
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@ID_Periodo", idper);
+
+                SqlDataReader reader = comando.ExecuteReader();
+                while (reader.Read())
+                {
+                    Periodo periodo = new Periodo
+                    {
+                        IdPeriodo = reader.GetInt32(0),
+                        FInicial = reader.GetDateTime(1),
+                        FFin = reader.GetDateTime(2)
+                    };
+
+                    periodos.Add(periodo);
+                }
+            }
+
+            return periodos;
+        }
+
     }
 }

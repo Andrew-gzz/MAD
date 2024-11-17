@@ -15,6 +15,7 @@ namespace MAD
 {
     public partial class Empleados : Cabecera
     {
+        public DateTime Fecha_Baja { get; set; }
         public Empleados()
         {
             InitializeComponent();
@@ -223,7 +224,6 @@ namespace MAD
             }
         }
 
-
         private bool Validaciones()
         {
             // Validar TextBox
@@ -327,6 +327,9 @@ namespace MAD
                 }
                 // Decide si es una inserción o una actualización              
                 EmpleadoDAO.ActualizarEmpleado(nuevoEmpleado); // Método para actualizar el empleado
+                int idmov = Movimientos_EmpleadosDAO.ObtenerIdMovimientoActivo(nuevoEmpleado.IdEmpleado);
+                int idperiodo = PeriodoDAO.ObtIdPerPorF_Ingreso(nuevoEmpleado.FechaDeIngreso);
+                Movimientos_EmpleadosDAO.ActualizarMov(nuevoEmpleado.FechaDeIngreso, idperiodo, idmov);
                 MessageBox.Show("Empleado actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);                
             }
         }
@@ -387,6 +390,27 @@ namespace MAD
             };
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //Optencion de datos
+                BajaEmpleado newWindow = new BajaEmpleado(this);
+                newWindow.ShowDialog();
+                if (Fecha_Baja != DateTime.MinValue)//Tipo DateTime verificar si no esta vacio
+                {
+                    int id_per = PeriodoDAO.ObtIdPerPorF_Ingreso(Fecha_Baja);
+                    int id_mov = Movimientos_EmpleadosDAO.ObtenerIdMovimientoActivo(int.Parse(textBox1.Text));
+                    //Updates            
+                    int update1 = EmpleadoDAO.BajaEmpleado(int.Parse(textBox1.Text));
+                    int update2 = Movimientos_EmpleadosDAO.BajaEmpleado(Fecha_Baja, id_per, id_mov);
+                }                
+            }
+            catch (Exception ex) { 
+            
+            MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
 
