@@ -240,7 +240,10 @@ namespace MAD
                             break;
 
                         case "Vacaciones":
-                            importe = empleado.SalarioDiario * VacacionesDAO.ObtenerDiasVacaciones(empleado.Antiguedad);
+                            
+                            DateTime  Hoy = DateTime.Now;
+                            int antiguedad = Hoy.Year - empleado.FechaDeIngreso.Year;
+                            importe = empleado.SalarioDiario * VacacionesDAO.ObtenerDiasVacaciones(antiguedad);
                             dataGridView2.Rows.Add(ajusteDetalle.Motivo, " ", importe.ToString("C2"));//Percepciones
                             TotalPercepciones += importe;
                             break;

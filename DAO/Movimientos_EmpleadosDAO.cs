@@ -198,6 +198,27 @@ namespace MAD.DAO
 
             return ultimaFechaBaja;
         }
+
+        public static int ObtIdAlta(int idEmpleado)
+        {
+            int idalta = -1;
+
+            using (SqlConnection conexion = BDConexion.ObtenerConexion())
+            {
+                string query = "SELECT ID_PERIODO_ALTA FROM Movimientos_Empleados WHERE ID_EMPLEADO = @ID_EMPLEADO AND F_BAJA IS NULL";
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@ID_EMPLEADO", idEmpleado);
+
+                object resultado = comando.ExecuteScalar();
+
+                if (resultado != null)
+                {
+                    idalta = Convert.ToInt32(resultado);
+                }
+            }
+
+            return idalta;
+        }
     }
 
 }

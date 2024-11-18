@@ -80,6 +80,22 @@ namespace MAD
             TablaISR newWindow = new TablaISR();
             newWindow.ShowDialog();
         }
+
+        private void departamentosSueldosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CatálogoDepartamentos newWindow = new CatálogoDepartamentos();
+            this.Hide();
+            newWindow.ShowDialog();
+            this.Close();
+        }
+
+        private void puesotsSueldosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CatálogoPuestos newWindow = new CatálogoPuestos();
+            this.Hide();
+            newWindow.ShowDialog();
+            this.Close();
+        }
     }
 }
 

@@ -39,9 +39,11 @@
             this.reporteDeNóminaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.catálogosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.empleadosSueldosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.departamentosSueldosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tablasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vacacionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.iSRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.puesotsSueldosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -115,7 +117,9 @@
             // catálogosToolStripMenuItem
             // 
             this.catálogosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.empleadosSueldosToolStripMenuItem});
+            this.empleadosSueldosToolStripMenuItem,
+            this.departamentosSueldosToolStripMenuItem,
+            this.puesotsSueldosToolStripMenuItem});
             this.catálogosToolStripMenuItem.Name = "catálogosToolStripMenuItem";
             this.catálogosToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
             this.catálogosToolStripMenuItem.Text = "Catálogos";
@@ -123,9 +127,16 @@
             // empleadosSueldosToolStripMenuItem
             // 
             this.empleadosSueldosToolStripMenuItem.Name = "empleadosSueldosToolStripMenuItem";
-            this.empleadosSueldosToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.empleadosSueldosToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.empleadosSueldosToolStripMenuItem.Text = "Empleados(Sueldos)";
             this.empleadosSueldosToolStripMenuItem.Click += new System.EventHandler(this.empleadosSueldosToolStripMenuItem_Click);
+            // 
+            // departamentosSueldosToolStripMenuItem
+            // 
+            this.departamentosSueldosToolStripMenuItem.Name = "departamentosSueldosToolStripMenuItem";
+            this.departamentosSueldosToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.departamentosSueldosToolStripMenuItem.Text = "Departamentos(Sueldos)";
+            this.departamentosSueldosToolStripMenuItem.Click += new System.EventHandler(this.departamentosSueldosToolStripMenuItem_Click);
             // 
             // tablasToolStripMenuItem
             // 
@@ -139,16 +150,23 @@
             // vacacionesToolStripMenuItem
             // 
             this.vacacionesToolStripMenuItem.Name = "vacacionesToolStripMenuItem";
-            this.vacacionesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.vacacionesToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.vacacionesToolStripMenuItem.Text = "Vacaciones";
             this.vacacionesToolStripMenuItem.Click += new System.EventHandler(this.vacacionesToolStripMenuItem_Click);
             // 
             // iSRToolStripMenuItem
             // 
             this.iSRToolStripMenuItem.Name = "iSRToolStripMenuItem";
-            this.iSRToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.iSRToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.iSRToolStripMenuItem.Text = "I.S.R";
             this.iSRToolStripMenuItem.Click += new System.EventHandler(this.iSRToolStripMenuItem_Click);
+            // 
+            // puesotsSueldosToolStripMenuItem
+            // 
+            this.puesotsSueldosToolStripMenuItem.Name = "puesotsSueldosToolStripMenuItem";
+            this.puesotsSueldosToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.puesotsSueldosToolStripMenuItem.Text = "Puestos(Sueldos)";
+            this.puesotsSueldosToolStripMenuItem.Click += new System.EventHandler(this.puesotsSueldosToolStripMenuItem_Click);
             // 
             // Cabecera
             // 
@@ -183,5 +201,7 @@
         private System.Windows.Forms.ToolStripMenuItem tablasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vacacionesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem iSRToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem departamentosSueldosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem puesotsSueldosToolStripMenuItem;
     }
 }

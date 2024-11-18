@@ -181,6 +181,46 @@ namespace MAD.DAO
 
             return periodos;
         }
+        public static (int? IDPeriodoInicial, int? IDPeriodoFinal) ObtenerPeriodosPorFechas(DateTime fechaInicial, DateTime fechaFinal)
+        {
+            int? idPeriodoInicial = null;
+            int? idPeriodoFinal = null;
+
+            using (SqlConnection conexion = BDConexion.ObtenerConexion())
+            {
+                // Consulta para obtener el ID del período inicial
+                string queryInicial = @"
+            SELECT TOP 1 ID_Periodo
+            FROM periodos
+            WHERE @FechaInicial BETWEEN F_Inicial AND F_Fin";
+
+                SqlCommand comandoInicial = new SqlCommand(queryInicial, conexion);
+                comandoInicial.Parameters.AddWithValue("@FechaInicial", fechaInicial);
+
+                object resultadoInicial = comandoInicial.ExecuteScalar();
+                if (resultadoInicial != null)
+                {
+                    idPeriodoInicial = Convert.ToInt32(resultadoInicial);
+                }
+
+                // Consulta para obtener el ID del período final
+                string queryFinal = @"
+            SELECT TOP 1 ID_Periodo
+            FROM periodos
+            WHERE @FechaFinal BETWEEN F_Inicial AND F_Fin";
+
+                SqlCommand comandoFinal = new SqlCommand(queryFinal, conexion);
+                comandoFinal.Parameters.AddWithValue("@FechaFinal", fechaFinal);
+
+                object resultadoFinal = comandoFinal.ExecuteScalar();
+                if (resultadoFinal != null)
+                {
+                    idPeriodoFinal = Convert.ToInt32(resultadoFinal);
+                }
+            }
+
+            return (idPeriodoInicial, idPeriodoFinal);
+        }
 
     }
 }

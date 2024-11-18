@@ -53,7 +53,6 @@ namespace MAD.DAO
 
                 return resultado;
             }
-
             //Metodo para buscar por ID y retornar el nombre
             public static string ObtenerNombreDepartamentoPorId(int idDep)
             {

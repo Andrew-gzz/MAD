@@ -72,11 +72,23 @@
     <Compile Include="AjustesObligados.Designer.cs">
       <DependentUpon>AjustesObligados.cs</DependentUpon>
     </Compile>
+    <Compile Include="CatálogoDepartamentos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CatálogoDepartamentos.Designer.cs">
+      <DependentUpon>CatálogoDepartamentos.cs</DependentUpon>
+    </Compile>
     <Compile Include="CatálogoEmpleadosSalarios.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CatálogoEmpleadosSalarios.Designer.cs">
       <DependentUpon>CatálogoEmpleadosSalarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CatálogoPuestos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CatálogoPuestos.Designer.cs">
+      <DependentUpon>CatálogoPuestos.cs</DependentUpon>
     </Compile>
     <Compile Include="DAO\ajusteDAO.cs" />
     <Compile Include="DAO\AjustesEmpleadoPeriodoDAO.cs" />
@@ -160,8 +172,14 @@
     <EmbeddedResource Include="AjustesObligados.resx">
       <DependentUpon>AjustesObligados.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CatálogoDepartamentos.resx">
+      <DependentUpon>CatálogoDepartamentos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CatálogoEmpleadosSalarios.resx">
       <DependentUpon>CatálogoEmpleadosSalarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CatálogoPuestos.resx">
+      <DependentUpon>CatálogoPuestos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EliminaciónAjuste.resx">
       <DependentUpon>EliminaciónAjuste.cs</DependentUpon>
