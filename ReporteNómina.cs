@@ -320,5 +320,33 @@ namespace MAD
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)//Exportar en un excel
+        {
+            //Datos de la empresa
+            label1.Text = empresa.Ra_S; //Razon Social de la Empresa
+            label7.Text = empresa.RFC; //RFC de la empresa
+            label8.Text = empresa.RepLegal; //Representante legal
+            label9.Text = empresa.Id_RP.ToString(); //Id del registro patronal
+            label10.Text = empresa.Direccion; //Direccion
+            label11.Text = empresa.Re_Fiscal; //Registro fiscal
+            //Datos del empleado
+            label12.Text = empleado.IdEmpleado.ToString();//ID del empleado
+            label13.Text = empleado.Nombre;//Nombre
+            label23.Text = empleado.Rfc;//RFC
+            label25.Text = empleado.Curp;//Curp
+            label26.Text = empleado.FechaDeIngreso.ToString("dd/MM/yyyy");//Fecha de ingreso
+            label27.Text = TurnosDAO.ObtenerTipoTurnoPorId(empleado.IdTurno);//Turno
+            label24.Text = empleado.Imss.ToString();//IMSS
+            label21.Text = empleado.Direccion;//Direccion
+            label40.Text = $"{periodo.FInicial:dd/MM/yyyy} - {periodo.FFin:dd/MM/yyyy}";//Periodo
+            label38.Text = $" {periodo.FFin:dd/MM/yyyy}";        //Dia de pago
+            label39.Text = departamentoDAO.ObtenerNombreDepartamentoPorId(empleado.IdDep);//Departamento
+            label36.Text = puestosDAO.ObtenerNombrePuestoPorId(empleado.IdPuesto); //Puesto
+            label35.Text = empresa.Re_Fiscal;//Registro Fiscal
+            //Sacar la informacion del dataGridView2
+            //Sacar la informacion del dataGridView3
+            //Sacar la informacion del dataGridView4
+            //Sacar la informacion del dataGridView5
+        }
     }
 }
