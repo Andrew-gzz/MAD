@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using ClosedXML.Excel;
 
 namespace MAD
 {
@@ -319,34 +320,131 @@ namespace MAD
                 }
             }
         }
-
-        private void button1_Click(object sender, EventArgs e)//Exportar en un excel
+        private void button1_Click(object sender, EventArgs e) // Exportar a Excel
         {
-            //Datos de la empresa
-            label1.Text = empresa.Ra_S; //Razon Social de la Empresa
-            label7.Text = empresa.RFC; //RFC de la empresa
-            label8.Text = empresa.RepLegal; //Representante legal
-            label9.Text = empresa.Id_RP.ToString(); //Id del registro patronal
-            label10.Text = empresa.Direccion; //Direccion
-            label11.Text = empresa.Re_Fiscal; //Registro fiscal
-            //Datos del empleado
-            label12.Text = empleado.IdEmpleado.ToString();//ID del empleado
-            label13.Text = empleado.Nombre;//Nombre
-            label23.Text = empleado.Rfc;//RFC
-            label25.Text = empleado.Curp;//Curp
-            label26.Text = empleado.FechaDeIngreso.ToString("dd/MM/yyyy");//Fecha de ingreso
-            label27.Text = TurnosDAO.ObtenerTipoTurnoPorId(empleado.IdTurno);//Turno
-            label24.Text = empleado.Imss.ToString();//IMSS
-            label21.Text = empleado.Direccion;//Direccion
-            label40.Text = $"{periodo.FInicial:dd/MM/yyyy} - {periodo.FFin:dd/MM/yyyy}";//Periodo
-            label38.Text = $" {periodo.FFin:dd/MM/yyyy}";        //Dia de pago
-            label39.Text = departamentoDAO.ObtenerNombreDepartamentoPorId(empleado.IdDep);//Departamento
-            label36.Text = puestosDAO.ObtenerNombrePuestoPorId(empleado.IdPuesto); //Puesto
-            label35.Text = empresa.Re_Fiscal;//Registro Fiscal
-            //Sacar la informacion del dataGridView2
-            //Sacar la informacion del dataGridView3
-            //Sacar la informacion del dataGridView4
-            //Sacar la informacion del dataGridView5
+            try
+            {
+                using (var saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter = "Archivos de Excel (*.xlsx)|*.xlsx";
+                    saveFileDialog.Title = "Guardar Reporte de Nómina";
+                    saveFileDialog.FileName = "ReporteNomina.xlsx";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        using (var workbook = new ClosedXML.Excel.XLWorkbook())
+                        {
+                            // Crear una sola hoja para todo el contenido
+                            var hoja = workbook.Worksheets.Add("Recibo de Nómina");
+                            int filaActual = 1;
+
+                            // Sección: Datos de la Empresa
+                            hoja.Cell(filaActual, 1).Value = "DATOS DE LA EMPRESA";
+                            hoja.Range(filaActual, 1, filaActual, 2).Merge().Style.Font.Bold = true;
+                            filaActual++;
+
+                            hoja.Cell(filaActual, 1).Value = "Razón Social";
+                            hoja.Cell(filaActual, 2).Value = label1.Text;
+                            filaActual++;
+                            hoja.Cell(filaActual, 1).Value = "RFC";
+                            hoja.Cell(filaActual, 2).Value = label7.Text;
+                            filaActual++;
+                            hoja.Cell(filaActual, 1).Value = "Representante Legal";
+                            hoja.Cell(filaActual, 2).Value = label8.Text;
+                            filaActual++;
+                            hoja.Cell(filaActual, 1).Value = "ID Registro Patronal";
+                            hoja.Cell(filaActual, 2).Value = label9.Text;
+                            filaActual++;
+                            hoja.Cell(filaActual, 1).Value = "Dirección";
+                            hoja.Cell(filaActual, 2).Value = label10.Text;
+                            filaActual++;
+                            hoja.Cell(filaActual, 1).Value = "Registro Fiscal";
+                            hoja.Cell(filaActual, 2).Value = label11.Text;
+                            filaActual += 2; // Espaciado entre secciones
+
+                            // Sección: Datos del Empleado
+                            hoja.Cell(filaActual, 1).Value = "DATOS DEL EMPLEADO";
+                            hoja.Range(filaActual, 1, filaActual, 2).Merge().Style.Font.Bold = true;
+                            filaActual++;
+
+                            hoja.Cell(filaActual, 1).Value = "ID Empleado";
+                            hoja.Cell(filaActual, 2).Value = label12.Text;
+                            filaActual++;
+                            hoja.Cell(filaActual, 1).Value = "Nombre";
+                            hoja.Cell(filaActual, 2).Value = label13.Text;
+                            filaActual++;
+                            hoja.Cell(filaActual, 1).Value = "RFC";
+                            hoja.Cell(filaActual, 2).Value = label23.Text;
+                            filaActual++;
+                            hoja.Cell(filaActual, 1).Value = "CURP";
+                            hoja.Cell(filaActual, 2).Value = label25.Text;
+                            filaActual++;
+                            hoja.Cell(filaActual, 1).Value = "Fecha de Ingreso";
+                            hoja.Cell(filaActual, 2).Value = label26.Text;
+                            filaActual++;
+                            hoja.Cell(filaActual, 1).Value = "Turno";
+                            hoja.Cell(filaActual, 2).Value = label27.Text;
+                            filaActual++;
+                            hoja.Cell(filaActual, 1).Value = "IMSS";
+                            hoja.Cell(filaActual, 2).Value = label24.Text;
+                            filaActual++;
+                            hoja.Cell(filaActual, 1).Value = "Dirección";
+                            hoja.Cell(filaActual, 2).Value = label21.Text;
+                            filaActual++;
+                            hoja.Cell(filaActual, 1).Value = "Departamento";
+                            hoja.Cell(filaActual, 2).Value = label39.Text;
+                            filaActual++;
+                            hoja.Cell(filaActual, 1).Value = "Puesto";
+                            hoja.Cell(filaActual, 2).Value = label36.Text;
+                            filaActual += 2; // Espaciado entre secciones
+
+                            // Sección: DataGridView
+                            ExportarDataGridViewAHoja(hoja, dataGridView2, "PERCEPCIONES", ref filaActual);
+                            ExportarDataGridViewAHoja(hoja, dataGridView3, "DEDUCCIONES", ref filaActual);
+                            ExportarDataGridViewAHoja(hoja, dataGridView4, "EXTRAORDINARIO", ref filaActual);
+                            ExportarDataGridViewAHoja(hoja, dataGridView5, "INCIDENCIAS", ref filaActual);
+                            ExportarDataGridViewAHoja(hoja, dataGridView6, "TOTALES", ref filaActual);
+
+                            // Guardar el archivo en la ubicación seleccionada
+                            workbook.SaveAs(saveFileDialog.FileName);
+                            MessageBox.Show("El archivo se ha guardado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ocurrió un error al exportar los datos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
+        // Método auxiliar para exportar un DataGridView a la misma hoja
+        private void ExportarDataGridViewAHoja(IXLWorksheet hoja, DataGridView dgv, string titulo, ref int filaActual)
+        {
+            // Título de la sección
+            hoja.Cell(filaActual, 1).Value = titulo;
+            hoja.Range(filaActual, 1, filaActual, dgv.Columns.Count).Merge().Style.Font.Bold = true;
+            filaActual++;
+
+            // Encabezados
+            for (int col = 0; col < dgv.Columns.Count; col++)
+            {
+                hoja.Cell(filaActual, col + 1).Value = dgv.Columns[col].HeaderText;
+                hoja.Cell(filaActual, col + 1).Style.Font.Bold = true;
+            }
+            filaActual++;
+
+            // Filas de datos
+            for (int row = 0; row < dgv.Rows.Count; row++)
+            {
+                for (int col = 0; col < dgv.Columns.Count; col++)
+                {
+                    hoja.Cell(filaActual + row, col + 1).Value = dgv.Rows[row].Cells[col].Value?.ToString();
+                }
+            }
+            filaActual += dgv.Rows.Count + 2; // Espaciado entre secciones
+        }
+
+
     }
 }
