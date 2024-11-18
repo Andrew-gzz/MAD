@@ -1,4 +1,5 @@
 ﻿using MAD.DAO;
+using MAD.Tablas;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,7 +27,8 @@ namespace MAD
             // Verificar las credenciales del usuario
             bool autenticado = UsuarioDAO.AutenticarUsuario(Usuario, contrasena);
 
-            if (!autenticado){
+            if (!autenticado)
+            {
                 MessageBox.Show("Credenciales incorrectas. Intenta nuevamente.");
             }
             else
@@ -35,12 +37,35 @@ namespace MAD
                 this.Hide();
                 newWindow.ShowDialog();
                 this.Close();
-            }           
+            }
         }
 
         private void Sesion_Load(object sender, EventArgs e)
         {
+            ConfigurarDataGridView();
+            RellenarDataGridView();
+        }
+        private void ConfigurarDataGridView()
+        {
+            // Limpiar columnas anteriores si existen
+            dataGridView1.Columns.Clear();
 
+            // Agregar las columnas "Empleado" y "ID"           
+            dataGridView1.Columns.Add("ID", "ID");
+            dataGridView1.Columns.Add("Empresa", "Empresa");
+        }
+        private void RellenarDataGridView()
+        {
+            // Limpiar filas existentes en el DataGridView
+            dataGridView1.Rows.Clear();
+
+            // Obtener lista de empleados desde la base de datos
+            List <Empresa> listaEmpresa = EmpresaDAO.ObtenerEmpresa();
+            // Rellenar el DataGridView con la información de empleados
+            foreach (Empresa empresa in listaEmpresa)
+            {
+                dataGridView1.Rows.Add(empresa.IdEmpresa,empresa.Ra_S);
+            }
         }
     }
 }

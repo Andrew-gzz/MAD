@@ -444,7 +444,5 @@ namespace MAD
             }
             filaActual += dgv.Rows.Count + 2; // Espaciado entre secciones
         }
-
-
     }
 }
