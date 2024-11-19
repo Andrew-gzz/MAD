@@ -368,6 +368,48 @@ namespace MAD.DAO
 
             return listaEmpleados;
         }
+        public static List<Empleado> ObtEmpPorIdTurno(int ID)
+        {
+            List<Empleado> listaEmpleados = new List<Empleado>();
 
+            using (SqlConnection conexion = BDConexion.ObtenerConexion())
+            {
+                string query = "SELECT * FROM empleados WHERE ID_TURNO = @ID_Turno;";
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@ID_Turno", ID);
+                SqlDataReader reader = comando.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Empleado empleado = new Empleado
+                    {
+                        IdEmpleado = reader.GetInt32(0),
+                        Imss = reader.GetInt64(1),
+                        Curp = reader.GetString(2),
+                        Nombre = reader.GetString(3),
+                        FechaNacimiento = reader.GetDateTime(4),
+                        Correo = reader.GetString(5),
+                        Genero = reader.GetString(6),
+                        Telefono = reader.GetInt64(7),
+                        Rfc = reader.GetString(8),
+                        Direccion = reader.GetString(9),
+                        SalarioDiario = reader.GetDecimal(10),
+                        SueldoMensual = reader.GetDecimal(11),
+                        SalarioDiarioIntegrado = reader.GetDecimal(12),
+                        Antiguedad = reader.GetInt32(13),
+                        FechaDeIngreso = reader.GetDateTime(14),
+                        IdPuesto = reader.GetInt32(15),
+                        IdDep = reader.GetInt32(16),
+                        IdTurno = reader.GetInt32(17),
+                        Estatus = reader.GetBoolean(18),
+                        ID_ISR = reader.GetInt32(19),
+                    };
+
+                    listaEmpleados.Add(empleado);
+                }
+            }
+
+            return listaEmpleados;
+        }
     }
 }

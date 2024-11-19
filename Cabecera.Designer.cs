@@ -40,10 +40,11 @@
             this.catálogosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.empleadosSueldosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.departamentosSueldosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.puesotsSueldosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tablasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vacacionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.iSRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.puesotsSueldosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.turnosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -119,7 +120,8 @@
             this.catálogosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.empleadosSueldosToolStripMenuItem,
             this.departamentosSueldosToolStripMenuItem,
-            this.puesotsSueldosToolStripMenuItem});
+            this.puesotsSueldosToolStripMenuItem,
+            this.turnosToolStripMenuItem});
             this.catálogosToolStripMenuItem.Name = "catálogosToolStripMenuItem";
             this.catálogosToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
             this.catálogosToolStripMenuItem.Text = "Catálogos";
@@ -137,6 +139,13 @@
             this.departamentosSueldosToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.departamentosSueldosToolStripMenuItem.Text = "Departamentos(Sueldos)";
             this.departamentosSueldosToolStripMenuItem.Click += new System.EventHandler(this.departamentosSueldosToolStripMenuItem_Click);
+            // 
+            // puesotsSueldosToolStripMenuItem
+            // 
+            this.puesotsSueldosToolStripMenuItem.Name = "puesotsSueldosToolStripMenuItem";
+            this.puesotsSueldosToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.puesotsSueldosToolStripMenuItem.Text = "Puestos(Sueldos)";
+            this.puesotsSueldosToolStripMenuItem.Click += new System.EventHandler(this.puesotsSueldosToolStripMenuItem_Click);
             // 
             // tablasToolStripMenuItem
             // 
@@ -161,12 +170,12 @@
             this.iSRToolStripMenuItem.Text = "I.S.R";
             this.iSRToolStripMenuItem.Click += new System.EventHandler(this.iSRToolStripMenuItem_Click);
             // 
-            // puesotsSueldosToolStripMenuItem
+            // turnosToolStripMenuItem
             // 
-            this.puesotsSueldosToolStripMenuItem.Name = "puesotsSueldosToolStripMenuItem";
-            this.puesotsSueldosToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
-            this.puesotsSueldosToolStripMenuItem.Text = "Puestos(Sueldos)";
-            this.puesotsSueldosToolStripMenuItem.Click += new System.EventHandler(this.puesotsSueldosToolStripMenuItem_Click);
+            this.turnosToolStripMenuItem.Name = "turnosToolStripMenuItem";
+            this.turnosToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.turnosToolStripMenuItem.Text = "Turnos(Sueldos)";
+            this.turnosToolStripMenuItem.Click += new System.EventHandler(this.turnosToolStripMenuItem_Click);
             // 
             // Cabecera
             // 
@@ -203,5 +212,6 @@
         private System.Windows.Forms.ToolStripMenuItem iSRToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem departamentosSueldosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem puesotsSueldosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem turnosToolStripMenuItem;
     }
 }

@@ -96,6 +96,14 @@ namespace MAD
             newWindow.ShowDialog();
             this.Close();
         }
+
+        private void turnosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CatálogoTurnos newWindow = new CatálogoTurnos();
+            this.Hide();
+            newWindow.ShowDialog();
+            this.Close();
+        }
     }
 }
 
