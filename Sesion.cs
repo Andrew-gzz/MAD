@@ -33,7 +33,7 @@ namespace MAD
             }
             else
             {
-                Empleados newWindow = new Empleados();
+                PeriodoSelect newWindow = new PeriodoSelect();
                 this.Hide();
                 newWindow.ShowDialog();
                 this.Close();

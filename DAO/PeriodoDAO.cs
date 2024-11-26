@@ -102,7 +102,6 @@ namespace MAD.DAO
 
             return periodo;
         }
-
         public static int ObtIdPerPorF_Ingreso(DateTime fecha) {
             int idPeriodo = 0; // Inicializamos con 0 en caso de que no se encuentre un periodo.
 
@@ -126,7 +125,6 @@ namespace MAD.DAO
 
             return idPeriodo;
         }
-
         public static List<Periodo> ObtPeridosEnUnRango(int PeriodoInicial, int PeriodoFinal)
         {
             List<Periodo> lista = new List<Periodo>();
@@ -154,7 +152,6 @@ namespace MAD.DAO
 
             return lista;
         }
-
         public static List<Periodo> PeriodoEnAdelante(int idper)
         {
             List<Periodo> periodos = new List<Periodo>();
@@ -220,6 +217,55 @@ namespace MAD.DAO
             }
 
             return (idPeriodoInicial, idPeriodoFinal);
+        }
+        public static int ObtIdPerPorFInicial(DateTime fechaInicial)
+        {
+            int idPeriodo = 0; // Inicializamos con 0 en caso de que no se encuentre un periodo.
+
+            using (SqlConnection conexion = BDConexion.ObtenerConexion())
+            {
+                string query = @"
+                SELECT ID_Periodo
+                FROM periodos
+                WHERE MONTH(F_Inicial) = @Mes AND YEAR(F_Inicial) = @Año";
+
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@Mes", fechaInicial.Month);
+                comando.Parameters.AddWithValue("@Año", fechaInicial.Year);
+
+                object resultado = comando.ExecuteScalar();
+
+                if (resultado != null)
+                {
+                    idPeriodo = Convert.ToInt32(resultado);
+                }
+            }
+
+            return idPeriodo;
+        }
+
+        public static Periodo ObtenerPeriodoActual()
+        {
+            Periodo periodo = null;
+
+            using (SqlConnection conexion = BDConexion.ObtenerConexion())
+            {
+                string query = "SELECT TOP 1 ID_Periodo, F_Inicial, F_Fin FROM periodos ORDER BY ID_Periodo DESC";
+                SqlCommand comando = new SqlCommand(query, conexion);
+                SqlDataReader reader = comando.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    periodo = new Periodo
+                    {
+                        IdPeriodo = reader.GetInt32(0),
+                        FInicial = reader.GetDateTime(1),
+                        FFin = reader.GetDateTime(2)
+                    };
+                }
+            }
+
+            return periodo;
         }
 
     }

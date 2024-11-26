@@ -12,6 +12,7 @@ namespace MAD
 {
     public partial class Cabecera : Form
     {
+        public static int idperiodo = 71;
         public Cabecera()
         {
             InitializeComponent();
@@ -100,6 +101,14 @@ namespace MAD
         private void turnosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CatálogoTurnos newWindow = new CatálogoTurnos();
+            this.Hide();
+            newWindow.ShowDialog();
+            this.Close();
+        }
+
+        private void inicioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Nomina newWindow = new Nomina();
             this.Hide();
             newWindow.ShowDialog();
             this.Close();

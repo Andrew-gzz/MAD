@@ -41,10 +41,10 @@
             this.empleadosSueldosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.departamentosSueldosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.puesotsSueldosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.turnosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tablasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vacacionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.iSRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.turnosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,11 +70,12 @@
             this.inicioToolStripMenuItem.Name = "inicioToolStripMenuItem";
             this.inicioToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.inicioToolStripMenuItem.Text = "Inicio";
+            this.inicioToolStripMenuItem.Click += new System.EventHandler(this.inicioToolStripMenuItem_Click);
             // 
             // cerrarSesiónToolStripMenuItem
             // 
             this.cerrarSesiónToolStripMenuItem.Name = "cerrarSesiónToolStripMenuItem";
-            this.cerrarSesiónToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.cerrarSesiónToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.cerrarSesiónToolStripMenuItem.Text = "Cerrar Sesión";
             this.cerrarSesiónToolStripMenuItem.Click += new System.EventHandler(this.cerrarSesiónToolStripMenuItem_Click);
             // 
@@ -147,6 +148,13 @@
             this.puesotsSueldosToolStripMenuItem.Text = "Puestos(Sueldos)";
             this.puesotsSueldosToolStripMenuItem.Click += new System.EventHandler(this.puesotsSueldosToolStripMenuItem_Click);
             // 
+            // turnosToolStripMenuItem
+            // 
+            this.turnosToolStripMenuItem.Name = "turnosToolStripMenuItem";
+            this.turnosToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.turnosToolStripMenuItem.Text = "Turnos(Sueldos)";
+            this.turnosToolStripMenuItem.Click += new System.EventHandler(this.turnosToolStripMenuItem_Click);
+            // 
             // tablasToolStripMenuItem
             // 
             this.tablasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -169,13 +177,6 @@
             this.iSRToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.iSRToolStripMenuItem.Text = "I.S.R";
             this.iSRToolStripMenuItem.Click += new System.EventHandler(this.iSRToolStripMenuItem_Click);
-            // 
-            // turnosToolStripMenuItem
-            // 
-            this.turnosToolStripMenuItem.Name = "turnosToolStripMenuItem";
-            this.turnosToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
-            this.turnosToolStripMenuItem.Text = "Turnos(Sueldos)";
-            this.turnosToolStripMenuItem.Click += new System.EventHandler(this.turnosToolStripMenuItem_Click);
             // 
             // Cabecera
             // 

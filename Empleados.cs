@@ -177,9 +177,10 @@ namespace MAD
 
             if (Validaciones())
             {
-                int i = Movimientos_EmpleadosDAO.ObtenerIdMovimientoActivo(int.Parse(textBox1.Text));
-                if (i < 0)
+                
+                if (!string.IsNullOrEmpty(textBox1.Text))
                 {
+                    int i = Movimientos_EmpleadosDAO.ObtenerIdMovimientoActivo(int.Parse(textBox1.Text));
                     DialogResult result = MessageBox.Show("El empleado está de baja. ¿Desea darlo de alta de nuevo?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (result == DialogResult.Yes)
                     {
@@ -208,6 +209,7 @@ namespace MAD
                     }
                     return;
                 }
+
                 // Llama a la función para obtener los datos del empleado
                 Empleado nuevoEmpleado = ObtenerDatosEmpleado();
 
@@ -340,30 +342,57 @@ namespace MAD
             bool estatus = true;
             int idisr = int.Parse(textBox12.Text); // ID_ISR
 
-            // Crear el objeto Empleado
-            return new Empleado
+            if (!string.IsNullOrEmpty(textBox1.Text))
             {
-                IdEmpleado = int.Parse(textBox1.Text),
-                Imss = imss,
-                Curp = curp,
-                Nombre = name,
-                FechaNacimiento = f_nac,
-                Correo = correo,
-                Genero = genero,
-                Telefono = telefono,
-                Rfc = rfc,
-                Direccion = domicilio,
-                SalarioDiario = sd,
-                SueldoMensual = sm,
-                SalarioDiarioIntegrado = sdi,
-                FechaDeIngreso = f_ingreso,
-                Antiguedad = antiguedad,
-                IdPuesto = idpuesto,
-                IdDep = iddep,
-                IdTurno = idturno,
-                Estatus = estatus,
-                ID_ISR = idisr
-            };
+                // Crear el objeto Empleado
+                return new Empleado
+                {
+                    IdEmpleado = int.Parse(textBox1.Text),
+                    Imss = imss,
+                    Curp = curp,
+                    Nombre = name,
+                    FechaNacimiento = f_nac,
+                    Correo = correo,
+                    Genero = genero,
+                    Telefono = telefono,
+                    Rfc = rfc,
+                    Direccion = domicilio,
+                    SalarioDiario = sd,
+                    SueldoMensual = sm,
+                    SalarioDiarioIntegrado = sdi,
+                    FechaDeIngreso = f_ingreso,
+                    Antiguedad = antiguedad,
+                    IdPuesto = idpuesto,
+                    IdDep = iddep,
+                    IdTurno = idturno,
+                    Estatus = estatus,
+                    ID_ISR = idisr
+                };
+            }
+            else { 
+                return new Empleado
+                {                   
+                    Imss = imss,
+                    Curp = curp,
+                    Nombre = name,
+                    FechaNacimiento = f_nac,
+                    Correo = correo,
+                    Genero = genero,
+                    Telefono = telefono,
+                    Rfc = rfc,
+                    Direccion = domicilio,
+                    SalarioDiario = sd,
+                    SueldoMensual = sm,
+                    SalarioDiarioIntegrado = sdi,
+                    FechaDeIngreso = f_ingreso,
+                    Antiguedad = antiguedad,
+                    IdPuesto = idpuesto,
+                    IdDep = iddep,
+                    IdTurno = idturno,
+                    Estatus = estatus,
+                    ID_ISR = idisr
+                };
+            }
         }
         private bool Validaciones()
         {
