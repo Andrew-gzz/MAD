@@ -89,6 +89,7 @@
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(40, 20);
             this.textBox1.TabIndex = 1;
+            this.textBox1.TabStop = false;
             // 
             // textBox2
             // 
@@ -97,7 +98,7 @@
             this.textBox2.MaxLength = 255;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(178, 20);
-            this.textBox2.TabIndex = 2;
+            this.textBox2.TabIndex = 1;
             // 
             // textBox3
             // 
@@ -105,7 +106,7 @@
             this.textBox3.MaxLength = 11;
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 3;
+            this.textBox3.TabIndex = 10;
             // 
             // textBox4
             // 
@@ -113,7 +114,7 @@
             this.textBox4.MaxLength = 18;
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(127, 20);
-            this.textBox4.TabIndex = 4;
+            this.textBox4.TabIndex = 11;
             // 
             // textBox5
             // 
@@ -121,7 +122,7 @@
             this.textBox5.MaxLength = 255;
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(198, 20);
-            this.textBox5.TabIndex = 5;
+            this.textBox5.TabIndex = 7;
             // 
             // textBox6
             // 
@@ -129,7 +130,7 @@
             this.textBox6.MaxLength = 10;
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(100, 20);
-            this.textBox6.TabIndex = 6;
+            this.textBox6.TabIndex = 5;
             // 
             // textBox7
             // 
@@ -137,7 +138,7 @@
             this.textBox7.MaxLength = 13;
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(103, 20);
-            this.textBox7.TabIndex = 7;
+            this.textBox7.TabIndex = 12;
             // 
             // textBox8
             // 
@@ -145,7 +146,7 @@
             this.textBox8.MaxLength = 255;
             this.textBox8.Name = "textBox8";
             this.textBox8.Size = new System.Drawing.Size(211, 20);
-            this.textBox8.TabIndex = 8;
+            this.textBox8.TabIndex = 6;
             // 
             // textBox9
             // 
@@ -153,7 +154,7 @@
             this.textBox9.MaxLength = 9;
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(120, 20);
-            this.textBox9.TabIndex = 9;
+            this.textBox9.TabIndex = 13;
             this.textBox9.TextChanged += new System.EventHandler(this.textBox9_TextChanged);
             // 
             // textBox10
@@ -163,6 +164,7 @@
             this.textBox10.ReadOnly = true;
             this.textBox10.Size = new System.Drawing.Size(120, 20);
             this.textBox10.TabIndex = 10;
+            this.textBox10.TabStop = false;
             // 
             // label1
             // 
@@ -265,7 +267,7 @@
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(191, 443);
+            this.dataGridView1.Size = new System.Drawing.Size(191, 423);
             this.dataGridView1.TabIndex = 21;
             this.dataGridView1.TabStop = false;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
@@ -286,6 +288,7 @@
             this.textBox11.ReadOnly = true;
             this.textBox11.Size = new System.Drawing.Size(120, 20);
             this.textBox11.TabIndex = 22;
+            this.textBox11.TabStop = false;
             // 
             // dateTimePicker1
             // 
@@ -295,7 +298,7 @@
             this.dateTimePicker1.MinDate = new System.DateTime(1950, 1, 1, 0, 0, 0, 0);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(111, 20);
-            this.dateTimePicker1.TabIndex = 24;
+            this.dateTimePicker1.TabIndex = 2;
             // 
             // dateTimePicker2
             // 
@@ -304,7 +307,7 @@
             this.dateTimePicker2.MinDate = new System.DateTime(2019, 1, 1, 0, 0, 0, 0);
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(100, 20);
-            this.dateTimePicker2.TabIndex = 25;
+            this.dateTimePicker2.TabIndex = 17;
             this.dateTimePicker2.Value = new System.DateTime(2024, 12, 31, 0, 0, 0, 0);
             // 
             // groupBox1
@@ -314,7 +317,7 @@
             this.groupBox1.Location = new System.Drawing.Point(435, 25);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(100, 67);
-            this.groupBox1.TabIndex = 26;
+            this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Genero:";
             // 
@@ -324,7 +327,7 @@
             this.radioButton2.Location = new System.Drawing.Point(6, 42);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(71, 17);
-            this.radioButton2.TabIndex = 1;
+            this.radioButton2.TabIndex = 5;
             this.radioButton2.TabStop = true;
             this.radioButton2.Text = "Femenino";
             this.radioButton2.UseVisualStyleBackColor = true;
@@ -335,7 +338,7 @@
             this.radioButton1.Location = new System.Drawing.Point(6, 19);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(73, 17);
-            this.radioButton1.TabIndex = 0;
+            this.radioButton1.TabIndex = 4;
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Masculino";
             this.radioButton1.UseVisualStyleBackColor = true;
@@ -364,7 +367,7 @@
             this.comboBox1.Location = new System.Drawing.Point(17, 82);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(100, 21);
-            this.comboBox1.TabIndex = 29;
+            this.comboBox1.TabIndex = 14;
             // 
             // comboBox2
             // 
@@ -372,7 +375,7 @@
             this.comboBox2.Location = new System.Drawing.Point(123, 82);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(127, 21);
-            this.comboBox2.TabIndex = 30;
+            this.comboBox2.TabIndex = 15;
             // 
             // comboBox3
             // 
@@ -380,7 +383,7 @@
             this.comboBox3.Location = new System.Drawing.Point(259, 82);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(100, 21);
-            this.comboBox3.TabIndex = 31;
+            this.comboBox3.TabIndex = 16;
             // 
             // label14
             // 
@@ -428,7 +431,7 @@
             this.groupBox2.Location = new System.Drawing.Point(219, 31);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(564, 170);
-            this.groupBox2.TabIndex = 36;
+            this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos Personales";
             // 
@@ -439,7 +442,7 @@
             this.groupBox4.Location = new System.Drawing.Point(435, 98);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(100, 67);
-            this.groupBox4.TabIndex = 27;
+            this.groupBox4.TabIndex = 8;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Estatus:";
             // 
@@ -449,7 +452,7 @@
             this.radioButton4.Location = new System.Drawing.Point(6, 42);
             this.radioButton4.Name = "radioButton4";
             this.radioButton4.Size = new System.Drawing.Size(63, 17);
-            this.radioButton4.TabIndex = 1;
+            this.radioButton4.TabIndex = 9;
             this.radioButton4.Text = "Inactivo";
             this.radioButton4.UseVisualStyleBackColor = true;
             // 
@@ -460,8 +463,7 @@
             this.radioButton3.Location = new System.Drawing.Point(6, 19);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(55, 17);
-            this.radioButton3.TabIndex = 0;
-            this.radioButton3.TabStop = true;
+            this.radioButton3.TabIndex = 8;
             this.radioButton3.Text = "Activo";
             this.radioButton3.UseVisualStyleBackColor = true;
             // 
@@ -492,7 +494,7 @@
             this.groupBox3.Location = new System.Drawing.Point(221, 207);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(561, 196);
-            this.groupBox3.TabIndex = 37;
+            this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Datos para la empresa";
             // 
@@ -512,33 +514,34 @@
             this.textBox12.ReadOnly = true;
             this.textBox12.Size = new System.Drawing.Size(120, 20);
             this.textBox12.TabIndex = 36;
+            this.textBox12.TabStop = false;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(248, 427);
+            this.button1.Location = new System.Drawing.Point(356, 426);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 38;
+            this.button1.TabIndex = 18;
             this.button1.Text = "Agregar";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(344, 427);
+            this.button2.Location = new System.Drawing.Point(452, 426);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 39;
+            this.button2.TabIndex = 19;
             this.button2.Text = "Modificar";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(440, 427);
+            this.button3.Location = new System.Drawing.Point(548, 426);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 40;
+            this.button3.TabIndex = 20;
             this.button3.Text = "Baja";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
@@ -547,7 +550,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 482);
+            this.ClientSize = new System.Drawing.Size(800, 461);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);

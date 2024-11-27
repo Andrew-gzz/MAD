@@ -102,7 +102,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(12, 27);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(172, 804);
+            this.dataGridView1.Size = new System.Drawing.Size(172, 288);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
@@ -134,14 +134,14 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(190, 27);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(598, 85);
+            this.panel1.Size = new System.Drawing.Size(721, 85);
             this.panel1.TabIndex = 3;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Montserrat SemiBold", 8.249999F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(343, 57);
+            this.label11.Location = new System.Drawing.Point(431, 57);
             this.label11.Margin = new System.Windows.Forms.Padding(3);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(64, 17);
@@ -152,7 +152,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Montserrat SemiBold", 8.249999F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(343, 34);
+            this.label10.Location = new System.Drawing.Point(431, 34);
             this.label10.Margin = new System.Windows.Forms.Padding(3);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(64, 17);
@@ -163,7 +163,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Montserrat SemiBold", 8.249999F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(488, 11);
+            this.label9.Location = new System.Drawing.Point(576, 11);
             this.label9.Margin = new System.Windows.Forms.Padding(3);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(64, 17);
@@ -196,7 +196,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Montserrat SemiBold", 8.249999F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(267, 57);
+            this.label6.Location = new System.Drawing.Point(355, 57);
             this.label6.Margin = new System.Windows.Forms.Padding(3);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(70, 17);
@@ -207,7 +207,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Montserrat SemiBold", 8.249999F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(272, 34);
+            this.label5.Location = new System.Drawing.Point(360, 34);
             this.label5.Margin = new System.Windows.Forms.Padding(3);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(65, 17);
@@ -229,7 +229,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Montserrat SemiBold", 8.249999F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(424, 11);
+            this.label3.Location = new System.Drawing.Point(512, 11);
             this.label3.Margin = new System.Windows.Forms.Padding(3);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(58, 17);
@@ -268,7 +268,7 @@
             this.panel2.Controls.Add(this.label17);
             this.panel2.Location = new System.Drawing.Point(190, 118);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(295, 197);
+            this.panel2.Size = new System.Drawing.Size(420, 197);
             this.panel2.TabIndex = 4;
             // 
             // label21
@@ -433,9 +433,9 @@
             this.panel3.Controls.Add(this.label30);
             this.panel3.Controls.Add(this.label29);
             this.panel3.Controls.Add(this.label28);
-            this.panel3.Location = new System.Drawing.Point(491, 118);
+            this.panel3.Location = new System.Drawing.Point(616, 118);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(297, 197);
+            this.panel3.Size = new System.Drawing.Size(295, 197);
             this.panel3.TabIndex = 5;
             // 
             // label40
@@ -566,7 +566,7 @@
             this.dataGridView2.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dataGridView2.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(190, 346);
+            this.dataGridView2.Location = new System.Drawing.Point(12, 346);
             this.dataGridView2.MultiSelect = false;
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
@@ -583,7 +583,7 @@
             this.dataGridView3.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dataGridView3.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Location = new System.Drawing.Point(491, 346);
+            this.dataGridView3.Location = new System.Drawing.Point(313, 346);
             this.dataGridView3.MultiSelect = false;
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ReadOnly = true;
@@ -600,12 +600,12 @@
             this.dataGridView4.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dataGridView4.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView4.Location = new System.Drawing.Point(190, 578);
+            this.dataGridView4.Location = new System.Drawing.Point(617, 346);
             this.dataGridView4.MultiSelect = false;
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.ReadOnly = true;
             this.dataGridView4.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridView4.Size = new System.Drawing.Size(295, 89);
+            this.dataGridView4.Size = new System.Drawing.Size(295, 84);
             this.dataGridView4.TabIndex = 8;
             this.dataGridView4.TabStop = false;
             // 
@@ -613,7 +613,7 @@
             // 
             this.label41.AutoSize = true;
             this.label41.Font = new System.Drawing.Font("Montserrat ExtraBold", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label41.Location = new System.Drawing.Point(266, 321);
+            this.label41.Location = new System.Drawing.Point(100, 321);
             this.label41.Margin = new System.Windows.Forms.Padding(3);
             this.label41.Name = "label41";
             this.label41.Size = new System.Drawing.Size(128, 25);
@@ -624,7 +624,7 @@
             // 
             this.label42.AutoSize = true;
             this.label42.Font = new System.Drawing.Font("Montserrat ExtraBold", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label42.Location = new System.Drawing.Point(587, 321);
+            this.label42.Location = new System.Drawing.Point(396, 321);
             this.label42.Margin = new System.Windows.Forms.Padding(3);
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(123, 25);
@@ -639,12 +639,12 @@
             this.dataGridView5.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dataGridView5.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             this.dataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView5.Location = new System.Drawing.Point(491, 578);
+            this.dataGridView5.Location = new System.Drawing.Point(616, 467);
             this.dataGridView5.MultiSelect = false;
             this.dataGridView5.Name = "dataGridView5";
             this.dataGridView5.ReadOnly = true;
             this.dataGridView5.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridView5.Size = new System.Drawing.Size(297, 89);
+            this.dataGridView5.Size = new System.Drawing.Size(297, 74);
             this.dataGridView5.TabIndex = 13;
             this.dataGridView5.TabStop = false;
             // 
@@ -652,7 +652,7 @@
             // 
             this.label43.AutoSize = true;
             this.label43.Font = new System.Drawing.Font("Montserrat ExtraBold", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label43.Location = new System.Drawing.Point(266, 547);
+            this.label43.Location = new System.Drawing.Point(696, 321);
             this.label43.Margin = new System.Windows.Forms.Padding(3);
             this.label43.Name = "label43";
             this.label43.Size = new System.Drawing.Size(137, 25);
@@ -663,7 +663,7 @@
             // 
             this.label44.AutoSize = true;
             this.label44.Font = new System.Drawing.Font("Montserrat ExtraBold", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label44.Location = new System.Drawing.Point(301, 673);
+            this.label44.Location = new System.Drawing.Point(123, 547);
             this.label44.Margin = new System.Windows.Forms.Padding(3);
             this.label44.Name = "label44";
             this.label44.Size = new System.Drawing.Size(74, 25);
@@ -674,7 +674,7 @@
             // 
             this.label45.AutoSize = true;
             this.label45.Font = new System.Drawing.Font("Montserrat ExtraBold", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label45.Location = new System.Drawing.Point(593, 547);
+            this.label45.Location = new System.Drawing.Point(709, 436);
             this.label45.Margin = new System.Windows.Forms.Padding(3);
             this.label45.Name = "label45";
             this.label45.Size = new System.Drawing.Size(110, 25);
@@ -687,7 +687,7 @@
             this.dataGridView6.AllowUserToDeleteRows = false;
             this.dataGridView6.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             this.dataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView6.Location = new System.Drawing.Point(190, 704);
+            this.dataGridView6.Location = new System.Drawing.Point(12, 578);
             this.dataGridView6.Name = "dataGridView6";
             this.dataGridView6.ReadOnly = true;
             this.dataGridView6.Size = new System.Drawing.Size(295, 127);
@@ -695,7 +695,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(611, 756);
+            this.button1.Location = new System.Drawing.Point(728, 564);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 18;
@@ -707,7 +707,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 838);
+            this.ClientSize = new System.Drawing.Size(920, 714);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView6);
             this.Controls.Add(this.label45);

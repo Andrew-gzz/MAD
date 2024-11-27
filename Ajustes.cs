@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -20,7 +21,7 @@ namespace MAD
             InitializeComponent();
         }
         private int idemp;
-        private int idper;
+        private int idper = Cabecera.idperiodo;
 
         private void Ajustes_Load(object sender, EventArgs e)
         {
@@ -39,6 +40,8 @@ namespace MAD
         }
         private void RellenarDataGridView()
         {
+            Periodo periodo = PeriodoDAO.ObtenerPeriodoporID(Cabecera.idperiodo);
+            label6.Text = $"{periodo.FInicial:dd/MM/yyyy} - {periodo.FFin:dd/MM/yyyy}";
             // Limpiar filas existentes en el DataGridView
             dataGridView1.Rows.Clear();
             // Obtener lista de empleados desde la base de datos
@@ -48,10 +51,6 @@ namespace MAD
             {
                 dataGridView1.Rows.Add(empleado.Nombre, empleado.IdEmpleado);
             }
-            // Agregar las columnas "Periodo (ID_Periodo)", "F_Inicio", "F_Final" al dataGridView2
-            dataGridView2.Columns.Add("Periodo", "Periodo");
-            dataGridView2.Columns.Add("F_Inicio", "Fecha Inicio");
-            dataGridView2.Columns.Add("F_Final", "Fecha Fin");
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
@@ -118,64 +117,12 @@ namespace MAD
             {
                 DataGridViewRow selectedRow = dataGridView1.Rows[e.RowIndex];
                 int selectedID = Convert.ToInt32(selectedRow.Cells["ID"].Value);
-                idemp = selectedID;
-                // Obtener la información del empleado
-                Empleado empleado = EmpleadoDAO.ObtenerEmpleadoPorId(selectedID);
-
-                if (empleado != null)
-                {
-                    // Limpiar el DataGridView2 antes de llenarlo
-                    dataGridView2.Rows.Clear();
-
-                    List<Movimientos_Empleados> lista = Movimientos_EmpleadosDAO.ObtPeriodosPorEmp(empleado.IdEmpleado);
-                    // Llenar el DataGridView con los periodos obtenidos
-                    foreach (var row in lista)
-                    {
-                        List<Periodo> periodos = PeriodoDAO.ObtPeridosEnUnRango(row.ID_PERIODO_ALTA, row.ID_PERIODO_BAJA);
-                        foreach (var periodo in periodos)
-                        {
-
-                            dataGridView2.Rows.Add(periodo.IdPeriodo, periodo.FInicial.ToString("yyyy-MM-dd"), periodo.FFin.ToString("yyyy-MM-dd"));
-                        }
-                    }
-                    int idperiodo = Movimientos_EmpleadosDAO.ObtPeriodoAlta(empleado.IdEmpleado);
-                    if (idperiodo > 0)
-                    {
-                        List<Periodo> Periodos = PeriodoDAO.PeriodoEnAdelante(idperiodo);
-                        foreach (var periodo in Periodos)
-                        {
-
-                            dataGridView2.Rows.Add(periodo.IdPeriodo, periodo.FInicial.ToString("yyyy-MM-dd"), periodo.FFin.ToString("yyyy-MM-dd"));
-                        }
-                    }
-
-
-                }
-                else
-                {
-                    MessageBox.Show("No se pudo cargar la información del empleado.");
-                }
+                idemp = selectedID;               
             }
         }
         private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
-            {
-                DataGridViewRow selectedRow = dataGridView2.Rows[e.RowIndex];
-                int selectedID = Convert.ToInt32(selectedRow.Cells["Periodo"].Value);
-                idper = selectedID;
-                // Obtener la información del empleado
-                Periodo periodo = PeriodoDAO.ObtenerPeriodoporID(selectedID);
 
-                if (periodo != null)
-                {
-                    dateTimePicker1.Value = periodo.FInicial;                   
-                }
-                else
-                {
-                    MessageBox.Show("No se pudo cargar la información del empleado.");
-                }
-            }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -198,87 +145,73 @@ namespace MAD
             EliminaciónAjuste newWindow = new EliminaciónAjuste();
             newWindow.IdEmp = idemp;
             newWindow.ShowDialog();
-        }//falta validacion
-        private void button1_Click(object sender, EventArgs e)//falta validacíón
+        }//Eliminar Ajuste
+        private void button1_Click(object sender, EventArgs e)//Agregar Ajuste
         {
-            if (Validaciones() > 0) {
-                string motivo = comboBox1.Text; // Sacar motivo de comboBox1
-                int idAjuste = AjusteDAO.BuscarIdAjustePorMotivo(motivo); // Buscar el ID_AJUSTE por motivo
-                if (idper == null || idemp == null)
+            string motivo = comboBox1.Text; // Sacar motivo de comboBox1
+            int idAjuste = AjusteDAO.BuscarIdAjustePorMotivo(motivo); // Buscar el ID_AJUSTE por motivo
+            if (idemp<=0)
+            {
+                MessageBox.Show("Selecciona un empleado o periodo valido");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(comboBox1.Text))
+            {
+                MessageBox.Show("Selecciona un ajuste valido");
+                return;
+            }
+            if (comboBox1.Text == "Faltas" && string.IsNullOrWhiteSpace(textBox1.Text))
+            {
+                MessageBox.Show("Agrega los dias de falta");
+                return;
+            }
+            if (idAjuste != -1)
+            {
+                bool repetido = AjustesEmpleadoPeriodoDAO.VerificarRepetidos(idemp, idAjuste, idper);
+                if (repetido)
                 {
-                    MessageBox.Show("Selecciona un empleado o periodo valido");
-                    return;
-                }
-                if (string.IsNullOrWhiteSpace(comboBox1.Text))
-                {
-                    MessageBox.Show("Selecciona un ajuste valido");
-                    return;
-                }
-
-                if (idAjuste != -1)
-                {
-                    bool repetido = AjustesEmpleadoPeriodoDAO.VerificarRepetidos(idemp, idAjuste, idper);
-                    if (repetido)
-                    {
-                        MessageBox.Show("Ya existe un registro con estos datos.");
-                    }
-                    else
-                    {
-                        // Verificar si el valor de textBox1 es un número válido para long
-                        long? diasHorasIMSS = null;
-                        if (!string.IsNullOrWhiteSpace(textBox1.Text) && long.TryParse(textBox1.Text, out long parsedValue))
-                        {
-                            diasHorasIMSS = parsedValue;
-                        }
-                        else
-                        {
-                            diasHorasIMSS = 0;
-                        }
-                        AjustesEmpleadoPeriodo ajusteEmpleadoPeriodo = new AjustesEmpleadoPeriodo
-                        {
-                            IdAjuste = idAjuste,
-                            IdEmp = idemp,
-                            IdPeriodo = idper,
-                            DiasHorasIMSS = diasHorasIMSS
-                        };
-
-                        int resultado = AjustesEmpleadoPeriodoDAO.InsertarAjusteEmpleadoPeriodo(ajusteEmpleadoPeriodo);
-                        if (resultado > 0)
-                        {
-                            MessageBox.Show("Ajuste agregado exitosamente.");
-                        }
-                        else
-                        {
-                            MessageBox.Show("Ocurrió un error al agregar el ajuste.");
-                        }
-                    }
+                    MessageBox.Show("Ya existe un registro con estos datos.");
                 }
                 else
                 {
-                    MessageBox.Show("No se encontró el ID_AJUSTE para el motivo especificado.");
+                    // Verificar si el valor de textBox1 es un número válido para long
+                    long? diasHorasIMSS = null;
+                    if (!string.IsNullOrWhiteSpace(textBox1.Text) && long.TryParse(textBox1.Text, out long parsedValue))
+                    {
+                        diasHorasIMSS = parsedValue;
+                    }
+                    else
+                    {
+                        diasHorasIMSS = 0;
+                    }
+                    AjustesEmpleadoPeriodo ajusteEmpleadoPeriodo = new AjustesEmpleadoPeriodo
+                    {
+                        IdAjuste = idAjuste,
+                        IdEmp = idemp,
+                        IdPeriodo = idper,
+                        DiasHorasIMSS = diasHorasIMSS
+                    };
+
+                    int resultado = AjustesEmpleadoPeriodoDAO.InsertarAjusteEmpleadoPeriodo(ajusteEmpleadoPeriodo);
+                    if (resultado > 0)
+                    {
+                        MessageBox.Show("Ajuste agregado exitosamente.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ocurrió un error al agregar el ajuste.");
+                    }
                 }
             }
             else
             {
-                MessageBox.Show("Selecciona un periodo");
+                MessageBox.Show("No se encontró el ID_AJUSTE para el motivo especificado.");
             }
-        }
 
+        }
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
 
-        }
-
-        private int Validaciones()
-        {
-            int i = -1;
-
-            // Verificar si hay alguna fila seleccionada en el DataGridView
-            if (dataGridView2.SelectedCells.Count > 0)
-            {
-                i = dataGridView2.SelectedCells[0].RowIndex; // Devuelve el índice de la primera fila seleccionada
-            }          
-            return i;
         }
 
     }

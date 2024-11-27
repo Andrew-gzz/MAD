@@ -18,8 +18,7 @@ namespace MAD
 {
     public partial class ReporteNómina : Cabecera 
     {
-
-        public int periodoseleccionado { get; set; }
+        public static int idempleado = -1;
         private decimal TotalPercepciones = 0;
         private decimal TotalDeducciones = 0;
         private decimal NetoAPagar = 0;
@@ -34,6 +33,10 @@ namespace MAD
             ConfigurarDataGridView();
             RellenarDataGridView();
             FillDataCorp();
+            if(idempleado > 0)
+            {
+                CalcularNomina();
+            }
         }
         private void ConfigurarDataGridView()
         {
@@ -93,37 +96,30 @@ namespace MAD
                 Empleado empleado = EmpleadoDAO.ObtenerEmpleadoPorId(selectedID);
 
                 if (empleado != null)
-                {                   
-                    SelecPeriodo newWindow = new SelecPeriodo(this);
-                    newWindow.idempleado = empleado.IdEmpleado;
-                    newWindow.ShowDialog();
-                    if (periodoseleccionado != 0)
+                {                                           
+                    label12.Text = empleado.IdEmpleado.ToString();
+                    label13.Text = empleado.Nombre;
+                    label23.Text = empleado.Rfc;
+                    label25.Text = empleado.Curp;
+                    label26.Text = empleado.FechaDeIngreso.ToString("dd/MM/yyyy");
+                    label27.Text = TurnosDAO.ObtenerTipoTurnoPorId(empleado.IdTurno);
+                    label24.Text = empleado.Imss.ToString();
+                    label21.Text = empleado.Direccion;
+                    Periodo periodo = PeriodoDAO.ObtenerPeriodoporID(Cabecera.idperiodo);
+                    if (periodo != null)
                     {
-                        MessageBox.Show($"Periodo seleccionado: {periodoseleccionado}");
-                        label12.Text = empleado.IdEmpleado.ToString();
-                        label13.Text = empleado.Nombre;
-                        label23.Text = empleado.Rfc;
-                        label25.Text = empleado.Curp;
-                        label26.Text = empleado.FechaDeIngreso.ToString("dd/MM/yyyy");
-                        label27.Text = TurnosDAO.ObtenerTipoTurnoPorId(empleado.IdTurno);
-                        label24.Text = empleado.Imss.ToString();
-                        label21.Text = empleado.Direccion;
-                        Periodo periodo = PeriodoDAO.ObtenerPeriodoporID(periodoseleccionado);
-                        if (periodo != null)
-                        {
-                            label40.Text = $"{periodo.FInicial:dd/MM/yyyy} - {periodo.FFin:dd/MM/yyyy}";
-                            label38.Text =$" {periodo.FFin:dd/MM/yyyy}";
-                        }
-                        label37.Text = "30.41";
-                        label39.Text = departamentoDAO.ObtenerNombreDepartamentoPorId(empleado.IdDep);
-                        label36.Text = puestosDAO.ObtenerNombrePuestoPorId(empleado.IdPuesto);
-                        Empresa empresa = EmpresaDAO.ObtenerEmpresaPorId(1);
-                        if(empresa != null)
-                        {
-                            label35.Text = empresa.Re_Fiscal;
-                        }
-                        RellenarPercepciones(empleado.SueldoMensual, empleado);
+                        label40.Text = $"{periodo.FInicial:dd/MM/yyyy} - {periodo.FFin:dd/MM/yyyy}";
+                        label38.Text =$" {periodo.FFin:dd/MM/yyyy}";
                     }
+                    label37.Text = "30.41";
+                    label39.Text = departamentoDAO.ObtenerNombreDepartamentoPorId(empleado.IdDep);
+                    label36.Text = puestosDAO.ObtenerNombrePuestoPorId(empleado.IdPuesto);
+                    Empresa empresa = EmpresaDAO.ObtenerEmpresaPorId(1);
+                    if(empresa != null)
+                    {
+                        label35.Text = empresa.Re_Fiscal;
+                    }
+                    RellenarPercepciones(empleado.SueldoMensual, empleado);                   
                 }
                 else
                 {
@@ -223,7 +219,7 @@ namespace MAD
         private void ObtenerAjustes(Empleado empleado)
         {
             // Obtener los ajustes para el empleado y periodo seleccionados
-            List<AjustesEmpleadoPeriodo> ajustes = AjustesEmpleadoPeriodoDAO.ObtAjustPorEmpleadoPeriodo(empleado.IdEmpleado, periodoseleccionado);
+            List<AjustesEmpleadoPeriodo> ajustes = AjustesEmpleadoPeriodoDAO.ObtAjustPorEmpleadoPeriodo(empleado.IdEmpleado, Cabecera.idperiodo);
             decimal importe;
             foreach (var ajuste in ajustes)
             {
@@ -296,7 +292,7 @@ namespace MAD
                         case "Faltas":
                             diasHorasIMSS = ajuste.DiasHorasIMSS ?? 0m; // Asignar 0 si es nulo
                             importe = empleado.SalarioDiario * diasHorasIMSS;
-                            dataGridView4.Rows.Add(ajusteDetalle.Motivo, "SD*Dias", importe.ToString("C2"));//Percepciones Incidencias 
+                            dataGridView5.Rows.Add(ajusteDetalle.Motivo, "SD*Dias", importe.ToString("C2"));//Percepciones Incidencias 
                             TotalDeducciones += importe;
                             break;
 
@@ -417,7 +413,6 @@ namespace MAD
                 MessageBox.Show($"Ocurrió un error al exportar los datos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         // Método auxiliar para exportar un DataGridView a la misma hoja
         private void ExportarDataGridViewAHoja(IXLWorksheet hoja, DataGridView dgv, string titulo, ref int filaActual)
         {
@@ -443,6 +438,43 @@ namespace MAD
                 }
             }
             filaActual += dgv.Rows.Count + 2; // Espaciado entre secciones
+        }
+
+        //Se selecciono un empleado en la nomina
+        private void CalcularNomina()
+        {
+            Empleado empleado = EmpleadoDAO.ObtenerEmpleadoPorId(idempleado);
+
+            if (empleado != null)
+            {
+                label12.Text = empleado.IdEmpleado.ToString();
+                label13.Text = empleado.Nombre;
+                label23.Text = empleado.Rfc;
+                label25.Text = empleado.Curp;
+                label26.Text = empleado.FechaDeIngreso.ToString("dd/MM/yyyy");
+                label27.Text = TurnosDAO.ObtenerTipoTurnoPorId(empleado.IdTurno);
+                label24.Text = empleado.Imss.ToString();
+                label21.Text = empleado.Direccion;
+                Periodo periodo = PeriodoDAO.ObtenerPeriodoporID(Cabecera.idperiodo);
+                if (periodo != null)
+                {
+                    label40.Text = $"{periodo.FInicial:dd/MM/yyyy} - {periodo.FFin:dd/MM/yyyy}";
+                    label38.Text = $" {periodo.FFin:dd/MM/yyyy}";
+                }
+                label37.Text = "30.41";
+                label39.Text = departamentoDAO.ObtenerNombreDepartamentoPorId(empleado.IdDep);
+                label36.Text = puestosDAO.ObtenerNombrePuestoPorId(empleado.IdPuesto);
+                Empresa empresa = EmpresaDAO.ObtenerEmpresaPorId(1);
+                if (empresa != null)
+                {
+                    label35.Text = empresa.Re_Fiscal;
+                }
+                RellenarPercepciones(empleado.SueldoMensual, empleado);
+            }
+            else
+            {
+                MessageBox.Show("No se pudo cargar la información del empleado.");
+            }
         }
     }
 }

@@ -37,6 +37,7 @@ namespace MAD
             FillDataGridView();   //Reliza los calculos de la nomina por empleado
             FillDataCorp();
         }
+
         private void ConfigDataGridView()
         {
             dataGridView1.Columns.Add("ID", "ID");
@@ -47,6 +48,7 @@ namespace MAD
             dataGridView1.Columns.Add("Incidencias", "Incidencias");
             dataGridView1.Columns.Add("Total", "Total");
         }
+
         private void CalcularTotales(Empleado empleado, int periodo)
         {
             try
@@ -109,6 +111,7 @@ namespace MAD
                 MessageBox.Show($"Ocurrió un error al llenar los ajustes: {ex.Message}");
             }
         }
+
         private decimal ObtenerPorcentajeISR(int empleadoId)
         {
             // Llama al método ObtenerISRPorid para obtener la lista de registros ISR asociados al ID
@@ -125,6 +128,7 @@ namespace MAD
                 return 0; // Retorna 0 si no se encuentra el ISR para evitar errores de cálculo
             }
         }
+
         private void ObtenerAjustes(Empleado empleado, int periodo)
         {
             // Obtener los ajustes para el empleado y periodo seleccionados
@@ -215,6 +219,7 @@ namespace MAD
                 }
             }
         }
+
         private void FillDataGridView()
         {           
             SumaTotal = 0; 
@@ -250,8 +255,14 @@ namespace MAD
             }
             dataGridView1.Rows.Add("Suma de total:", SumaTotal.ToString("C2"));           
         }
+
         private void FillDataCorp()
         {
+            Periodo PeriodoActual = PeriodoDAO.ObtenerPeriodoActual();
+            if(PeriodoActual.IdPeriodo != Cabecera.idperiodo)
+            {
+                button2.Enabled = false;
+            }
             Periodo periodo = PeriodoDAO.ObtenerPeriodoporID(Cabecera.idperiodo);
             label13.Text = $"{periodo.FInicial:dd/MM/yyyy} - {periodo.FFin:dd/MM/yyyy}";
             Empresa empresa = EmpresaDAO.ObtenerEmpresaPorId(1);
@@ -265,6 +276,7 @@ namespace MAD
                 label11.Text = empresa.Re_Fiscal;
             }
         }
+
         private void Imprimir_Click(object sender, EventArgs e)
         {
             try
@@ -305,6 +317,9 @@ namespace MAD
                             filaActual++;
                             hoja.Cell(filaActual, 1).Value = "Registro Fiscal";
                             hoja.Cell(filaActual, 2).Value = label11.Text;
+                            filaActual++;
+                            hoja.Cell(filaActual, 1).Value = "Periodo";
+                            hoja.Cell(filaActual, 2).Value = label13.Text;
                             filaActual += 2; // Espaciado entre secciones                          
 
                             // Sección: DataGridView
@@ -348,5 +363,58 @@ namespace MAD
             }
             filaActual += dgv.Rows.Count + 2; // Espaciado entre secciones
         }
-    }   
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            button1.Enabled = true;
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow selectedRow = dataGridView1.Rows[e.RowIndex];
+                int selectedID = Convert.ToInt32(selectedRow.Cells["ID"].Value);
+                ReporteNómina.idempleado = selectedID;
+            }
+               
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ReporteNómina newWindow = new ReporteNómina();
+            this.Hide();
+            newWindow.ShowDialog();
+            this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("¿Seguro que desea cerrar el periodo actual?", "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if(result == DialogResult.Yes) { 
+                Periodo NuevoPeriodo = PeriodoNuevo();
+                //PeriodoDAO.InsertarPeriodo(NuevoPeriodo);
+                MessageBox.Show("Se regresara a la pantalla de selección de periodo");
+                PeriodoSelect newWindow = new PeriodoSelect();
+                this.Hide();
+                newWindow.ShowDialog();
+                this.Close();
+            }
+        }
+
+        private Periodo PeriodoNuevo()
+        {
+            Periodo PeriodoActual = PeriodoDAO.ObtenerPeriodoActual();
+            DateTime FInicialActual = PeriodoActual.FInicial;
+
+            // Obtener el primer día del mes siguiente al periodo actual
+            DateTime nuevoFInicial = new DateTime(FInicialActual.Year, FInicialActual.Month, 1).AddMonths(1);
+
+            // Obtener el último día del nuevo mes
+            DateTime nuevoFFin = nuevoFInicial.AddMonths(1).AddDays(-1);
+
+            return new Periodo
+            {
+                FInicial = nuevoFInicial,
+                FFin = nuevoFFin
+            };
+        }
+
+    }
 }

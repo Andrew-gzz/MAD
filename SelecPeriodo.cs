@@ -69,7 +69,7 @@ namespace MAD
         {
             if (idper!=0)
             {
-                _reportenomina.periodoseleccionado = idper;
+                
                 this.Close();
             }
             else
