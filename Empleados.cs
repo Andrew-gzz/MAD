@@ -177,7 +177,7 @@ namespace MAD
         private void button1_Click(object sender, EventArgs e) //Agregar empleado
         {
 
-            if (Validaciones())
+            if (Validaciones(false))
             {
                 
                 if (!string.IsNullOrEmpty(textBox1.Text))
@@ -261,7 +261,7 @@ namespace MAD
         }
         private void button2_Click(object sender, EventArgs e)//Modificar empleado
         {
-            if (Validaciones())
+            if (Validaciones(true))
             {
                 if (Zucaritas != dateTimePicker2.Value) {
                     MessageBox.Show("Por politicas no puedes modificar la fecha de ingreso");
@@ -293,7 +293,7 @@ namespace MAD
         {
             try
             {
-                if (Validaciones())
+                if (Validaciones(false))
                 {
                     int i = Movimientos_EmpleadosDAO.ObtenerIdMovimientoActivo(int.Parse(textBox1.Text));
                     if (i < 0)
@@ -403,7 +403,7 @@ namespace MAD
                 };
             }
         }
-        private bool Validaciones()
+        private bool Validaciones(bool btnmod)
         {
 
             int PeriodoActual = PeriodoDAO.ObtenerPeriodoActual().IdPeriodo;
@@ -437,9 +437,11 @@ namespace MAD
             if (!ValidarComboBox(comboBox3, "turno")) return false;
 
             // Validar DateTimePickers
-            if (!ValidarDateTimePicker(dateTimePicker1)) return false;
-            if (!ValidarDateTimePicker(dateTimePicker2, "La fecha de ingreso no puede ser futura.")) return false;
-
+            if (!ValidarDateTimePicker(dateTimePicker1)) return false;//fecha de nacimiento
+            if (!btnmod)
+            {
+                if (!ValidarDateTimePicker(dateTimePicker2, "La fecha de ingreso no puede ser futura.")) return false;
+            }
             //Validar si el empleado esta dado de baja
             return true;
         }

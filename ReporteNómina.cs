@@ -89,6 +89,7 @@ namespace MAD
         {
             if (e.RowIndex >= 0)
             {
+
                 DataGridViewRow selectedRow = dataGridView1.Rows[e.RowIndex];
                 int selectedID = Convert.ToInt32(selectedRow.Cells["ID"].Value);
 
@@ -151,6 +152,10 @@ namespace MAD
                 dataGridView4.Rows.Clear();
                 dataGridView5.Rows.Clear();
                 dataGridView6.Rows.Clear();
+                TotalPercepciones = 0;
+                TotalDeducciones = 0;
+                NetoAPagar = 0;
+
                 // Obtener los ajustes de tipo "Percepción"
                 List<Ajuste> ajustes = AjusteDAO.ObtenerAjustesObligatorios();
                 dataGridView2.Rows.Add("Sueldo", " ", sueldoMensual.ToString("C2"));
