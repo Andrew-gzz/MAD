@@ -422,7 +422,7 @@ namespace MAD
             if (!ValidarComboBox(comboBox3, "turno")) return false;
 
             // Validar DateTimePickers
-            if (!ValidarDateTimePicker(dateTimePicker1, "La fecha de nacimiento no puede ser futura.")) return false;
+            //if (!ValidarDateTimePicker(dateTimePicker1, "La fecha de nacimiento no puede ser futura.")) return false;
             if (!ValidarDateTimePicker(dateTimePicker2, "La fecha de ingreso no puede ser futura.")) return false;
 
             //Validar si el empleado esta dado de baja
@@ -466,9 +466,11 @@ namespace MAD
         }
         private bool ValidarDateTimePicker(DateTimePicker dateTimePicker, string mensajeError)
         {
-            if (dateTimePicker.Value.Date > DateTime.Now.Date)
+            Periodo PeriodoActual = PeriodoDAO.ObtenerPeriodoActual();
+            
+            if (dateTimePicker.Value.Date < PeriodoActual.FInicial.Date || dateTimePicker.Value.Date > PeriodoActual.FFin.Date)//Validar que se ingrese en el periodo actual
             {
-                MostrarMensajeValidacion(mensajeError);
+                MostrarMensajeValidacion("La fecha de ingreso debe ser dentro del periodo actual");
                 return false;
             }
             return true;
