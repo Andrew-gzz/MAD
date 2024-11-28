@@ -17,6 +17,7 @@ namespace MAD
     public partial class Empleados : Cabecera
     {
         public DateTime Fecha_Baja { get; set; }
+        private DateTime Zucaritas = DateTime.MinValue;
         public Empleados()
         {
             InitializeComponent();
@@ -115,6 +116,7 @@ namespace MAD
                     textBox10.Text = empleado.SueldoMensual.ToString("F2");
                     textBox11.Text = empleado.SalarioDiarioIntegrado.ToString("F2");
                     dateTimePicker2.Value = empleado.FechaDeIngreso;
+                    Zucaritas = empleado.FechaDeIngreso;
                     // Obtener los nombres a partir de los IDs
                     string puesto = puestosDAO.ObtenerNombrePuestoPorId(empleado.IdPuesto);
                     comboBox1.Text = puesto;
@@ -261,6 +263,10 @@ namespace MAD
         {
             if (Validaciones())
             {
+                if (Zucaritas != dateTimePicker2.Value) {
+                    MessageBox.Show("Por politicas no puedes modificar la fecha de ingreso");
+                    return;
+                }
                 int i = Movimientos_EmpleadosDAO.ObtenerIdMovimientoActivo(int.Parse(textBox1.Text));
                 if (i < 0)
                 {
@@ -431,7 +437,7 @@ namespace MAD
             if (!ValidarComboBox(comboBox3, "turno")) return false;
 
             // Validar DateTimePickers
-            //if (!ValidarDateTimePicker(dateTimePicker1, "La fecha de nacimiento no puede ser futura.")) return false;
+            if (!ValidarDateTimePicker(dateTimePicker1)) return false;
             if (!ValidarDateTimePicker(dateTimePicker2, "La fecha de ingreso no puede ser futura.")) return false;
 
             //Validar si el empleado esta dado de baja
@@ -482,6 +488,25 @@ namespace MAD
                 MostrarMensajeValidacion("La fecha de ingreso debe ser dentro del periodo actual");
                 return false;
             }
+            return true;
+        }
+        private bool ValidarDateTimePicker(DateTimePicker dateTimePicker)
+        {
+            DateTime Hoy = DateTime.Now;
+            DateTime FechaNacimiento = dateTimePicker.Value;
+            int Edad = Hoy.Year - FechaNacimiento.Year;
+
+            if (FechaNacimiento > Hoy.AddYears(-Edad))
+            {
+                Edad--;
+            }
+
+            if (Edad < 18)
+            {
+                MostrarMensajeValidacion("Tiene que ser mayor de edad");
+                return false;
+            }
+
             return true;
         }
         private void MostrarMensajeValidacion(string mensaje)
