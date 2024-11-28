@@ -49,7 +49,7 @@ namespace MAD
             dataGridView1.Columns.Add("Total", "Total");
         }
 
-        private void CalcularTotales(Empleado empleado, int periodo)
+        private void CalcularTotales(Empleado empleado, int periodo, bool reingreso)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace MAD
                 DeduccionesGenerales += fondoAhorro;
                 //Optener ajustes externos
                 ObtenerAjustes(empleado, periodo);
-                if (empleado.Estatus) { 
+                if (empleado.Estatus|| reingreso) { 
                     TotalPercepciones += OtrasPercepciones;
                     TotalDeducciones += OtrasDeducciones;
                     NetoAPagar = TotalPercepciones - TotalDeducciones;
@@ -102,6 +102,7 @@ namespace MAD
                 }
                 else
                 {
+                  
                     dataGridView1.Rows.Add(empleado.IdEmpleado.ToString(), empleado.Nombre, 0.ToString("C2"), 0.ToString("C2"),
                                                              0.ToString("C2"), 0.ToString("C2"), 0.ToString("C2"));
                 }
@@ -242,15 +243,15 @@ namespace MAD
                         {
                             if (row4.ID_PERIODO_ALTA <= Cabecera.idperiodo && Cabecera.idperiodo <= row4.ID_PERIODO_BAJA)
                             {
-                                CalcularTotales(row, Cabecera.idperiodo);
+                                CalcularTotales(row, Cabecera.idperiodo, true);
                             }
                         }
                     }
                     //Para empleados que nunca han estado de baja comparar desde su fecha de ingreso
                     int LastDate = Movimientos_EmpleadosDAO.ObtIdAlta(row.IdEmpleado);
-                    if (Cabecera.idperiodo >= LastDate)
+                    if (Cabecera.idperiodo >= LastDate && row.Estatus)
                     {
-                        CalcularTotales(row, Cabecera.idperiodo);
+                        CalcularTotales(row, Cabecera.idperiodo, false);
                     }                  
             }
             dataGridView1.Rows.Add("Suma de total:", SumaTotal.ToString("C2"));           
