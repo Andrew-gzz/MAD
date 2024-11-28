@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Reflection.Emit;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -141,77 +142,90 @@ namespace MAD
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            if (PeriodoDAO.ObtenerPeriodoActual().IdPeriodo != Cabecera.idperiodo)
+            {
+                MessageBox.Show("No puedes eliminar en un periodo cerrado");
+                return;
+            }
             EliminaciónAjuste newWindow = new EliminaciónAjuste();
             newWindow.IdEmp = idemp;
             newWindow.ShowDialog();
         }//Eliminar Ajuste
-        private void button1_Click(object sender, EventArgs e)//Agregar Ajuste
+        private void button1_Click(object sender, EventArgs e) // Agregar Ajuste
         {
-            string motivo = comboBox1.Text; // Sacar motivo de comboBox1
-            int idAjuste = AjusteDAO.BuscarIdAjustePorMotivo(motivo); // Buscar el ID_AJUSTE por motivo
-            if (idemp<=0)
-            {
-                MessageBox.Show("Selecciona un empleado o periodo valido");
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(comboBox1.Text))
-            {
-                MessageBox.Show("Selecciona un ajuste valido");
-                return;
-            }
-            if (comboBox1.Text == "Faltas" && string.IsNullOrWhiteSpace(textBox1.Text))
-            {
-                MessageBox.Show("Agrega los dias de falta");
-                return;
-            }
-            if (idAjuste != -1)
-            {
-                bool repetido = AjustesEmpleadoPeriodoDAO.VerificarRepetidos(idemp, idAjuste, idper);
-                if (repetido)
-                {
-                    MessageBox.Show("Ya existe un registro con estos datos.");
-                }
-                else
-                {
-                    // Verificar si el valor de textBox1 es un número válido para long
-                    long? diasHorasIMSS = null;
-                    if (!string.IsNullOrWhiteSpace(textBox1.Text) && long.TryParse(textBox1.Text, out long parsedValue))
-                    {
-                        diasHorasIMSS = parsedValue;
-                    }
-                    else
-                    {
-                        diasHorasIMSS = 0;
-                    }
-                    AjustesEmpleadoPeriodo ajusteEmpleadoPeriodo = new AjustesEmpleadoPeriodo
-                    {
-                        IdAjuste = idAjuste,
-                        IdEmp = idemp,
-                        IdPeriodo = idper,
-                        DiasHorasIMSS = diasHorasIMSS
-                    };
+            if (!Validaciones()) return;
 
-                    int resultado = AjustesEmpleadoPeriodoDAO.InsertarAjusteEmpleadoPeriodo(ajusteEmpleadoPeriodo);
-                    if (resultado > 0)
-                    {
-                        MessageBox.Show("Ajuste agregado exitosamente.");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Ocurrió un error al agregar el ajuste.");
-                    }
-                }
+            string motivo = comboBox1.Text;
+            int idAjuste = AjusteDAO.BuscarIdAjustePorMotivo(motivo);
+            long? diasHorasIMSS = ObtenerDiasHorasIMSS();
+
+            AjustesEmpleadoPeriodo ajusteEmpleadoPeriodo = new AjustesEmpleadoPeriodo
+            {
+                IdAjuste = idAjuste,
+                IdEmp = idemp,
+                IdPeriodo = idper,
+                DiasHorasIMSS = diasHorasIMSS
+            };
+
+            if (AjustesEmpleadoPeriodoDAO.InsertarAjusteEmpleadoPeriodo(ajusteEmpleadoPeriodo) > 0)
+            {
+                Mensaje("Ajuste agregado exitosamente.");
             }
             else
             {
-                MessageBox.Show("No se encontró el ID_AJUSTE para el motivo especificado.");
+                Mensaje("Ocurrió un error al agregar el ajuste.");
             }
-
         }
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
 
+        }
+        private bool Validaciones()
+        {
+            if (PeriodoDAO.ObtenerPeriodoActual().IdPeriodo != Cabecera.idperiodo)
+            {
+                Mensaje("No se puede modificar si el periodo esta cerrado");
+                return false;
+            }
+            string motivo = comboBox1.Text;
+            if (AjusteDAO.BuscarIdAjustePorMotivo(motivo) < 0)
+            {
+                Mensaje("No se encontró el ID_AJUSTE para el motivo especificado.");
+                return false;
+            }
+            if (AjustesEmpleadoPeriodoDAO.VerificarRepetidos(idemp, AjusteDAO.BuscarIdAjustePorMotivo(motivo), idper))
+            {
+                Mensaje("Ya existe un registro con estos datos.");
+                return false;
+            }            
+            if (idemp <= 0)
+            {
+                Mensaje("Selecciona un empleado o periodo válido.");
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(comboBox1.Text))
+            {
+                Mensaje("Selecciona un ajuste válido.");
+                return false;
+            }
+            if (comboBox1.Text == "Faltas" && string.IsNullOrWhiteSpace(textBox1.Text))
+            {
+                Mensaje("Agrega los días de falta.");
+                return false;
+            }
+            return true;
+        }
+        private long? ObtenerDiasHorasIMSS()
+        {
+            if (!string.IsNullOrWhiteSpace(textBox1.Text) && long.TryParse(textBox1.Text, out long parsedValue))
+            {
+                return parsedValue;
+            }
+            return 0;
+        }
+        private void Mensaje(string message)
+        {
+            MessageBox.Show(message);
         }
 
     }

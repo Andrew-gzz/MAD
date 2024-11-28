@@ -370,11 +370,19 @@ namespace MAD
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow selectedRow = dataGridView1.Rows[e.RowIndex];
-                int selectedID = Convert.ToInt32(selectedRow.Cells["ID"].Value);
-                ReporteNómina.idempleado = selectedID;
+                object cellValue = selectedRow.Cells["ID"].Value;
+
+                if (cellValue != null && int.TryParse(cellValue.ToString(), out int selectedID))
+                {
+                    ReporteNómina.idempleado = selectedID;
+                }
+                else
+                {
+                    button1.Enabled = false;
+                }
             }
-               
         }
+
 
         private void button1_Click(object sender, EventArgs e)
         {

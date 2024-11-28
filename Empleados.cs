@@ -287,23 +287,26 @@ namespace MAD
         {
             try
             {
-                int i = Movimientos_EmpleadosDAO.ObtenerIdMovimientoActivo(int.Parse(textBox1.Text));
-                if (i < 0)
+                if (Validaciones())
                 {
-                    MostrarMensajeValidacion("El usuario ya esta dado de baja");
-                    return;
-                }
-                //Optencion de datos
-                BajaEmpleado newWindow = new BajaEmpleado(this);
-                newWindow.ShowDialog();
-                if (Fecha_Baja != DateTime.MinValue)//Tipo DateTime verificar si no esta vacio
-                {
-                    int id_per = PeriodoDAO.ObtIdPerPorF_Ingreso(Fecha_Baja);
-                    int id_mov = Movimientos_EmpleadosDAO.ObtenerIdMovimientoActivo(int.Parse(textBox1.Text));
-                    //Updates            
-                    int update1 = EmpleadoDAO.BajaEmpleado(int.Parse(textBox1.Text));
-                    int update2 = Movimientos_EmpleadosDAO.BajaEmpleado(Fecha_Baja, id_per, id_mov);
-                }
+                    int i = Movimientos_EmpleadosDAO.ObtenerIdMovimientoActivo(int.Parse(textBox1.Text));
+                    if (i < 0)
+                    {
+                        MostrarMensajeValidacion("El usuario ya esta dado de baja");
+                        return;
+                    }
+                    //Optencion de datos
+                    BajaEmpleado newWindow = new BajaEmpleado(this);
+                    newWindow.ShowDialog();
+                    if (Fecha_Baja != DateTime.MinValue)//Tipo DateTime verificar si no esta vacio
+                    {
+                        int id_per = PeriodoDAO.ObtIdPerPorF_Ingreso(Fecha_Baja);
+                        int id_mov = Movimientos_EmpleadosDAO.ObtenerIdMovimientoActivo(int.Parse(textBox1.Text));
+                        //Updates            
+                        int update1 = EmpleadoDAO.BajaEmpleado(int.Parse(textBox1.Text));
+                        int update2 = Movimientos_EmpleadosDAO.BajaEmpleado(Fecha_Baja, id_per, id_mov);
+                    }
+                }               
             }
             catch (Exception ex)
             {
@@ -396,6 +399,12 @@ namespace MAD
         }
         private bool Validaciones()
         {
+
+            int PeriodoActual = PeriodoDAO.ObtenerPeriodoActual().IdPeriodo;
+            if (PeriodoActual != Cabecera.idperiodo) {
+                MessageBox.Show("No puedes modificar datos en periodos cerrados");
+                return false;
+            }
             // Validar TextBox
             if (!ValidarTextBox(textBox2, "Nombre")) return false;
             if (!ValidarTextBoxNumerico(textBox3, "IMSS")) return false;

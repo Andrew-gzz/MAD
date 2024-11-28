@@ -75,9 +75,10 @@ namespace MAD.DAO
 
             using (SqlConnection conexion = BDConexion.ObtenerConexion())
             {
-                string query = "SELECT ID_AJUSTE, ID_EMP, ID_PERIODO, DiasHorasIMSS FROM Ajustes_Empleado_Periodo WHERE ID_EMP = @IdEmp";
+                string query = "SELECT ID_AJUSTE, ID_EMP, ID_PERIODO, DiasHorasIMSS FROM Ajustes_Empleado_Periodo WHERE ID_EMP = @IdEmp AND ID_PERIODO = @IDPER";
                 SqlCommand comando = new SqlCommand(query, conexion);
                 comando.Parameters.AddWithValue("@IdEmp", idEmp);
+                comando.Parameters.AddWithValue("@IDPER", Cabecera.idperiodo);
 
                 SqlDataReader reader = comando.ExecuteReader();
                 while (reader.Read())
